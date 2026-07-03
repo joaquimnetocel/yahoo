@@ -20,14 +20,14 @@ const intervalosDoYahooFinance = [
 	'3mo',
 ] as const satisfies readonly tipoIntervaloDoYahooFinance[];
 
-const schemaFuncaoLer = v.object({
+const schema = v.object({
 	simbolo: v.pipe(v.string(), v.trim(), v.minLength(1)),
 	intervalo: v.optional(v.picklist(intervalosDoYahooFinance)),
 	fim: v.optional(v.date()),
 	periodos: v.pipe(v.number(), v.integer(), v.minValue(1)),
 });
 
-export const funcaoLer = query(schemaFuncaoLer, async ({ simbolo, intervalo, fim, periodos }) => {
+export const funcaoLer = query(schema, async ({ simbolo, intervalo, fim, periodos }) => {
 	const opcoes = funcaoConstruirOpcoesParaYahooFinance({
 		intervalo,
 		fim,
