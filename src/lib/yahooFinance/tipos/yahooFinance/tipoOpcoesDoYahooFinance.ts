@@ -1,4 +1,5 @@
-import YahooFinance from 'yahoo-finance2';
-const yf = new YahooFinance();
+import type YahooFinance from 'yahoo-finance2';
 
-export type tipoOpcoesDoYahooFinance = Parameters<typeof yf.chart>[1];
+type tipoYahooFinance = InstanceType<typeof YahooFinance>;
+
+export type tipoOpcoesDoYahooFinance = Parameters<tipoYahooFinance['chart']>[1];

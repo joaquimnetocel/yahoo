@@ -1,5 +1,5 @@
 import { funcaoConstruirOpcoesParaYahooFinance } from '$lib/yahooFinance/funcoes/funcaoConstruirOpcoesParaYahooFinance';
-import { funcaoPegarDadosDoYahooFinance } from '$lib/yahooFinance/funcoes/funcaoPegarDadosDoYahooFinance';
+import { funcaoPegarDadosDoYahooFinance } from '$lib/yahooFinance/funcoes/funcaoPegarDadosDoYahooFinance.server';
 import type { tipoIntervaloDoYahooFinance } from '$lib/yahooFinance/tipos/yahooFinance/tipoIntervaloDoYahooFinance';
 
 export async function funcaoLer({
