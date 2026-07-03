@@ -1,6 +1,6 @@
 import { funcaoConverterDeYahooFinanceParaApexchart } from '$lib/yahooFinance/funcoes/funcaoConverterDeYahooFinanceParaApexchart';
 import type { PageServerLoad } from './$types';
-import { funcaoLer } from './funcaoLer.server';
+import { funcaoLer } from './funcaoLer.remote';
 
 export const load: PageServerLoad = async () => {
 	const lido = await funcaoLer({
