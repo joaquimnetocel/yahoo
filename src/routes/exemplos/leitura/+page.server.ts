@@ -1,9 +1,9 @@
 import { funcaoConverterDeYahooFinanceParaApexchart } from '$lib/yahooFinance/funcoes/funcaoConverterDeYahooFinanceParaApexchart';
+import { funcaoPegarDadosDoYahooFinance } from '$lib/yahooFinance/funcoes/remotaPegarDadosDoYahooFinance/funcaoPegarDadosDoYahooFinance.server';
 import type { PageServerLoad } from './$types';
-import { funcaoLer } from './funcaoLer.remote';
 
 export const load: PageServerLoad = async () => {
-	const lido = await funcaoLer({
+	const lido = await funcaoPegarDadosDoYahooFinance({
 		periodos: 300,
 		simbolo: 'PETR4.SA',
 	});

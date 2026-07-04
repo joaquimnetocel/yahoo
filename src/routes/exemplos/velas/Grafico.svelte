@@ -1,12 +1,12 @@
 <script lang="ts">
 	import GraficoDeVelas from '$lib/apexcharts/componentes/GraficoDeVelas.svelte';
 	import { funcaoConverterDeYahooFinanceParaApexchart } from '$lib/yahooFinance/funcoes/funcaoConverterDeYahooFinanceParaApexchart';
-	import { funcaoLer } from './funcaoLer.remote';
+	import { remotaPegarDadosDoYahooFinance } from '$lib/yahooFinance/funcoes/remotaPegarDadosDoYahooFinance/remotaPegarDadosDoYahooFinance.remote';
 
 	let { periodos, simbolo }: { periodos: number; simbolo: string } = $props();
 
 	const dados = $derived(
-		funcaoLer({
+		remotaPegarDadosDoYahooFinance({
 			periodos: periodos,
 			simbolo,
 			intervalo: '1d',

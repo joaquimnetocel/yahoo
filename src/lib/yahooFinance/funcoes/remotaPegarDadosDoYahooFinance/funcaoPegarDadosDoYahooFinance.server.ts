@@ -1,6 +1,6 @@
-import type { tipoDadosDoYahooFinance } from '../tipos/yahooFinance/tipoDadosDoYahooFinance';
-import type { tipoIntervaloDoYahooFinance } from '../tipos/yahooFinance/tipoIntervaloDoYahooFinance';
-import { funcaoConstruirOpcoesParaYahooFinance } from './funcaoConstruirOpcoesParaYahooFinance';
+import type { tipoDadosDoYahooFinance } from '../../tipos/yahooFinance/tipoDadosDoYahooFinance';
+import type { tipoIntervaloDoYahooFinance } from '../../tipos/yahooFinance/tipoIntervaloDoYahooFinance';
+import { funcaoConstruirOpcoesParaYahooFinance } from './funcaoConstruirOpcoesParaYahooFinance.server';
 import { funcaoLimparDadosDoYahooFinance } from './funcaoLimparDadosDoYahooFinance.server'; // Ajuste o caminho conforme necessário
 import { funcaoPegarDadosBrutosDoYahooFinance } from './funcaoPegarDadosBrutosDoYahooFinance.server';
 
