@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
+	import { Button } from '$lib/shadcn/componentes/ui/button/index.js';
 	import { Input } from '$lib/shadcn/componentes/ui/input/index.js';
 	import { Label } from '$lib/shadcn/componentes/ui/label/index.js';
 	import * as Select from '$lib/shadcn/componentes/ui/select/index.js';
@@ -26,6 +28,7 @@
 <!-- Trocado space-y-4 por flex para alinhar os filtros lado a lado na horizontal -->
 <div class="p-6 flex flex-wrap items-end gap-4">
 	<!-- Cada bloco agora controla seu próprio Label e Input empilhados -->
+	<Button href={resolve('/')}>VOLTAR</Button>
 	<div class="flex flex-col gap-1.5">
 		<Label>MERCADO:</Label>
 		<Select.Root type="single" bind:value={mercado}>
