@@ -68,7 +68,7 @@
 			Informe um número inteiro positivo.
 		</div>
 	{:else}
-		<div class="min-h-[400px]">
+		<div class="min-h-100">
 			<!-- Ajustado de min-h-100 para min-h-[400px] pois 100 não é padrão do Tailwind -->
 			<Grafico periodos={Number(periodos)} {simbolo} />
 		</div>
