@@ -1,6 +1,5 @@
-import type { tipoOpcoesDoYahooFinance } from '$lib/yahooFinance/tipos/yahooFinance/tipoOpcoesDoYahooFinance';
-
-type tipoIntervalo = NonNullable<tipoOpcoesDoYahooFinance['interval']>;
+import type { tipoIntervalo } from '../tipos/yahooFinance/tipoIntervalo';
+import type { tipoOpcoesDoYahooFinance } from '../tipos/yahooFinance/tipoOpcoesDoYahooFinance';
 
 export function funcaoConstruirOpcoesParaYahooFinance({
 	fim = new Date(),
