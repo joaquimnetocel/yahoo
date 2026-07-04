@@ -1,4 +1,4 @@
-import type { tipoIntervaloDoYahooFinance } from '../tipos/yahooFinance/tipoIntervaloDoYahooFinance';
+import type { tipoIntervaloDoYahooFinance } from '../tipos/tipoIntervaloDoYahooFinance';
 
 export const constIntervalosDoYahooFinance = [
 	'1m',

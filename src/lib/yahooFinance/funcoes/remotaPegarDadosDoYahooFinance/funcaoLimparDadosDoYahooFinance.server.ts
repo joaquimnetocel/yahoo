@@ -1,4 +1,4 @@
-import type { tipoDadosDoYahooFinance } from '$lib/yahooFinance/tipos/yahooFinance/tipoDadosDoYahooFinance';
+import type { tipoDadosDoYahooFinance } from '$lib/yahooFinance/tipos/tipoDadosDoYahooFinance';
 
 /**
  * Remove candles que contenham valores nulos e garante que o retorno

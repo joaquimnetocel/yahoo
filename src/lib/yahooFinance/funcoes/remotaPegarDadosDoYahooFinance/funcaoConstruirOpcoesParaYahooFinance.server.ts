@@ -1,5 +1,5 @@
-import type { tipoIntervalo } from '../../tipos/yahooFinance/tipoIntervalo';
-import type { tipoOpcoesDoYahooFinance } from '../../tipos/yahooFinance/tipoOpcoesDoYahooFinance';
+import type { tipoIntervalo } from '../../tipos/tipoIntervalo';
+import type { tipoOpcoesDoYahooFinance } from '../../tipos/tipoOpcoesDoYahooFinance';
 
 export function funcaoConstruirOpcoesParaYahooFinance({
 	fim = new Date(),

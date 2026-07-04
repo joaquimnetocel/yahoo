@@ -1,5 +1,5 @@
-import type { tipoDadosDoYahooFinance } from '$lib/yahooFinance/tipos/yahooFinance/tipoDadosDoYahooFinance';
-import type { tipoOpcoesDoYahooFinance } from '$lib/yahooFinance/tipos/yahooFinance/tipoOpcoesDoYahooFinance';
+import type { tipoDadosDoYahooFinance } from '$lib/yahooFinance/tipos/tipoDadosDoYahooFinance';
+import type { tipoOpcoesDoYahooFinance } from '$lib/yahooFinance/tipos/tipoOpcoesDoYahooFinance';
 import YahooFinance from 'yahoo-finance2';
 
 const yf = new YahooFinance();

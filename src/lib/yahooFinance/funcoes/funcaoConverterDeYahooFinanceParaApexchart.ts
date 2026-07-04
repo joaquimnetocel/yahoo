@@ -1,5 +1,5 @@
 import type { tipoVelaDoApexcharts } from '$lib/apexcharts/tipos/tipoVelaDoApexcharts';
-import type { tipoDadosDoYahooFinance } from '$lib/yahooFinance/tipos/yahooFinance/tipoDadosDoYahooFinance';
+import type { tipoDadosDoYahooFinance } from '$lib/yahooFinance/tipos/tipoDadosDoYahooFinance';
 
 export function funcaoConverterDeYahooFinanceParaApexchart(
 	dados: tipoDadosDoYahooFinance,
