@@ -1,5 +1,4 @@
 import { query } from '$app/server';
-import { funcaoConstruirOpcoesParaYahooFinance } from '$lib/yahooFinance/funcoes/funcaoConstruirOpcoesParaYahooFinance';
 import { funcaoPegarDadosDoYahooFinance } from '$lib/yahooFinance/funcoes/funcaoPegarDadosDoYahooFinance.server';
 import type { tipoIntervaloDoYahooFinance } from '$lib/yahooFinance/tipos/yahooFinance/tipoIntervaloDoYahooFinance';
 import * as v from 'valibot';
@@ -28,14 +27,10 @@ const schema = v.object({
 });
 
 export const funcaoLer = query(schema, async ({ simbolo, intervalo, fim, periodos }) => {
-	const opcoes = funcaoConstruirOpcoesParaYahooFinance({
+	return await funcaoPegarDadosDoYahooFinance({
+		simbolo,
 		intervalo,
 		fim,
 		periodos,
 	});
-	const lido = await funcaoPegarDadosDoYahooFinance({
-		simbolo,
-		opcoes,
-	});
-	return lido;
 });

@@ -18,7 +18,6 @@
 	} = $props();
 
 	let elemento = $state<HTMLDivElement>();
-	let grafico = $state<ApexCharts>();
 
 	const opcoes: ApexCharts.ApexOptions = {
 		series: [],
@@ -38,6 +37,7 @@
 		// },
 		xaxis: {
 			type: 'datetime',
+			tickPlacement: 'on',
 			labels: {
 				datetimeUTC: false, // <- Isso impede a conversão para horário local
 			},
@@ -60,99 +60,75 @@
 	$effect(() => {
 		if (!exibir || !elemento) return;
 
+		void velas;
+		void linhas;
+		void trades;
+
 		let cancelado = false;
 		let instancia: ApexCharts | undefined;
 
-		async function funcaoAssincronaCriarGrafico() {
+		(async () => {
 			const apex = await import('apexcharts');
 
 			if (cancelado || !elemento) return;
 
-			instancia = new apex.default(elemento, opcoes);
-			grafico = instancia;
-			await instancia.render();
-		}
+			const series: ApexCharts.ApexAxisChartSeries = [
+				{
+					name: 'COTAÇÕES',
+					type: 'candlestick',
+					data: velas,
+				},
+				...linhas.map((linha) => ({
+					name: linha.opcoes.descricao,
+					type: 'line' as const,
+					data: linha.dados,
+					color: linha.opcoes.cor,
+				})),
+			];
 
-		funcaoAssincronaCriarGrafico();
+			instancia = new apex.default(elemento, {
+				...opcoes,
+				series,
 
-		return () => {
-			cancelado = true;
-
-			if (instancia) {
-				instancia.destroy();
-			}
-
-			if (grafico === instancia) {
-				grafico = undefined;
-			}
-		};
-	});
-
-	$effect(() => {
-		if (grafico) {
-			const arraySeries: ApexCharts.ApexOptions['series'] = [];
-			arraySeries[0] = {
-				data: velas,
-				type: 'candlestick',
-				name: 'COTAÇÕES',
-				color: 'black',
-			};
-			for (let i = 1; i < linhas.length + 1; i++) {
-				arraySeries[i] = {
-					type: 'line',
-					name: linhas[i - 1].opcoes.descricao,
-					data: linhas[i - 1].dados,
-					color: linhas[i - 1].opcoes.cor,
-				};
-			}
-
-			grafico.updateOptions({
 				stroke: {
 					width: [2, ...linhas.map(() => 2)],
 					dashArray: [0, ...linhas.map(() => 5)],
 				},
 			});
 
-			grafico.updateSeries(arraySeries);
-		}
-	});
+			await instancia.render();
 
-	$effect(() => {
-		if (trades !== undefined) {
-			type typeApexAnnotations = Exclude<ApexCharts.ApexOptions['annotations'], undefined>;
-			type typeApexXaxis = Exclude<typeApexAnnotations['xaxis'], undefined>;
-
-			if (grafico) {
-				grafico.clearAnnotations();
-			}
-			trades.forEach((tradeCorrente) => {
-				const stringColor =
-					tradeCorrente.enumGanhoOuPerda === 'enumGanho'
+			for (const trade of trades) {
+				const cor =
+					trade.enumGanhoOuPerda === 'enumGanho'
 						? cores.verde
-						: tradeCorrente.enumGanhoOuPerda === 'enumPerda'
+						: trade.enumGanhoOuPerda === 'enumPerda'
 							? cores.vermelho
 							: cores.amarelo;
-				const objectXAxisAnnotation: typeApexXaxis[number] = {
-					x: tradeCorrente.dataDaCompra.getTime().toString(),
-					x2: tradeCorrente.dataDaVenda.getTime().toString(),
-					fillColor: stringColor,
+
+				instancia.addXaxisAnnotation({
+					x: trade.dataDaCompra.getTime(),
+					x2: trade.dataDaVenda.getTime(),
+					fillColor: cor,
 					opacity: 0.4,
 					label: {
-						borderColor: stringColor,
+						borderColor: cor,
+						offsetY: -10,
 						style: {
 							fontSize: '10px',
-							color: stringColor === cores.vermelho ? cores.branco : cores.preto,
-							background: stringColor,
+							background: cor,
+							color: cor === cores.vermelho ? cores.branco : cores.preto,
 						},
-						offsetY: -10,
-						text: `${tradeCorrente.duracao} (${tradeCorrente.fatorDeLucro > 1 ? ((tradeCorrente.fatorDeLucro - 1) * 100).toFixed(2) : ((tradeCorrente.fatorDeLucro - 1) * 100).toFixed(2)})`,
+						text: `${trade.duracao} (${((trade.fatorDeLucro - 1) * 100).toFixed(2)}%)`,
 					},
-				};
-				if (grafico) {
-					grafico.addXaxisAnnotation(objectXAxisAnnotation);
-				}
-			});
-		}
+				});
+			}
+		})();
+
+		return () => {
+			cancelado = true;
+			instancia?.destroy();
+		};
 	});
 </script>
 

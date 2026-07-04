@@ -5,13 +5,13 @@
 
 	let { periodos, simbolo }: { periodos: number; simbolo: string } = $props();
 
-	const dados = $derived.by(() => {
-		return funcaoLer({
+	const dados = $derived(
+		funcaoLer({
 			periodos: periodos,
 			simbolo,
 			intervalo: '1d',
-		});
-	});
+		}),
+	);
 
 	const velas = $derived.by(() => {
 		if (dados?.ready === false) {
