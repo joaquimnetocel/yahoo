@@ -15,7 +15,7 @@
 	import SelectDeMercado from './SelectDeMercado.svelte';
 
 	let mercado = $state<keyof tipoMercados>(constChavesMercados[0]);
-	let simbolo = $state('');
+	let simbolo = $state(constMercados[constChavesMercados[0]].ativos[0].ticker);
 	let periodos = $state('300');
 	let intervalo = $state<tipoIntervaloDoYahooFinance>('1d');
 	let periodosParaMediasMoveisSimples = $state<number[]>([10, 50, 70]);
