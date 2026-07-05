@@ -3,14 +3,19 @@
 	import { Spinner } from '$lib/shadcn/componentes/ui/spinner/index.js';
 	import { funcaoConverterDeYahooFinanceParaApexchart } from '$lib/yahooFinance/funcoes/funcaoConverterDeYahooFinanceParaApexchart';
 	import { remotaPegarDadosDoYahooFinance } from '$lib/yahooFinance/funcoes/remotaPegarDadosDoYahooFinance/remotaPegarDadosDoYahooFinance.remote';
+	import type { tipoIntervalo } from '$lib/yahooFinance/tipos/tipoIntervalo';
 
-	let { periodos, simbolo }: { periodos: number; simbolo: string } = $props();
+	let {
+		periodos,
+		simbolo,
+		intervalo,
+	}: { periodos: number; simbolo: string; intervalo: tipoIntervalo } = $props();
 
 	const promessa = $derived(
 		remotaPegarDadosDoYahooFinance({
 			periodos: periodos,
 			simbolo: simbolo,
-			intervalo: '1d',
+			intervalo,
 		}),
 	);
 

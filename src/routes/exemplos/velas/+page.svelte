@@ -5,13 +5,16 @@
 	import { Label } from '$lib/shadcn/componentes/ui/label/index.js';
 	import * as Select from '$lib/shadcn/componentes/ui/select/index.js';
 	import { constChavesMercados } from '$lib/yahooFinance/constantes/constChavesMercados';
+	import { constIntervalosDoYahooFinance } from '$lib/yahooFinance/constantes/constIntervalosDoYahooFinance';
 	import { constMercados } from '$lib/yahooFinance/constantes/constMercados';
+	import type { tipoIntervaloDoYahooFinance } from '$lib/yahooFinance/tipos/tipoIntervaloDoYahooFinance';
 	import type { tipoMercados } from '$lib/yahooFinance/tipos/tipoMercados';
 	import Grafico from './Grafico.svelte';
 
 	let mercado = $state<keyof tipoMercados>(constChavesMercados[0]);
 	let simbolo = $state('');
 	let periodos = $state('300');
+	let intervalo = $state<tipoIntervaloDoYahooFinance>('1d');
 	const ativos = $derived(constMercados[mercado].ativos);
 
 	$effect(() => {
@@ -38,7 +41,6 @@
 			</Select.Content>
 		</Select.Root>
 	</div>
-
 	<div class="flex flex-col gap-1.5">
 		<Label>ATIVO:</Label>
 		<Select.Root type="single" bind:value={simbolo}>
@@ -54,10 +56,24 @@
 			</Select.Content>
 		</Select.Root>
 	</div>
-
 	<div class="flex flex-col gap-1.5">
 		<Label>PERÍODOS:</Label>
 		<Input bind:value={periodos} type="number" min="1" step="1" class="w-24" />
+	</div>
+	<div class="flex flex-col gap-1.5">
+		<Label>INTERVALO:</Label>
+		<Select.Root type="single" bind:value={intervalo}>
+			<Select.Trigger class="w-18">
+				{intervalo}
+			</Select.Trigger>
+			<Select.Content class="max-h-64 overflow-y-auto">
+				{#each constIntervalosDoYahooFinance as intervaloCorrente (intervaloCorrente)}
+					<Select.Item value={intervaloCorrente} label={intervaloCorrente}>
+						{intervaloCorrente}
+					</Select.Item>
+				{/each}
+			</Select.Content>
+		</Select.Root>
 	</div>
 </div>
 
@@ -68,7 +84,7 @@
 		</div>
 	{:else}
 		<div class="min-h-100">
-			<Grafico periodos={Number(periodos)} {simbolo} />
+			<Grafico periodos={Number(periodos)} {simbolo} {intervalo} />
 		</div>
 	{/if}
 </div>
@@ -78,7 +94,7 @@
 		<div class="flex justify-center">Informe um número inteiro positivo.</div>
 	{:else}
 		<div class=" min-h-100">
-			<Grafico periodos={Number(periodos)} {simbolo} />
+			<Grafico periodos={Number(periodos)} {simbolo} {intervalo} />
 		</div>
 	{/if}
 </div>
