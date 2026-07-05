@@ -10,11 +10,13 @@
 	import type { tipoIntervaloDoYahooFinance } from '$lib/yahooFinance/tipos/tipoIntervaloDoYahooFinance';
 	import type { tipoMercados } from '$lib/yahooFinance/tipos/tipoMercados';
 	import Grafico from './Grafico.svelte';
+	import InputsDeMediasMoveis from './InputsDeMediasMoveis.svelte';
 
 	let mercado = $state<keyof tipoMercados>(constChavesMercados[0]);
 	let simbolo = $state('');
 	let periodos = $state('300');
 	let intervalo = $state<tipoIntervaloDoYahooFinance>('1d');
+	let periodosParaMediasMoveisSimples = $state<number[]>([10, 50, 70]);
 	const ativos = $derived(constMercados[mercado].ativos);
 
 	$effect(() => {
@@ -26,7 +28,7 @@
 	});
 </script>
 
-<div class="p-6 flex flex-wrap items-end gap-4">
+<div class="p-6 flex flex-wrap items-end gap-4 justify-center">
 	<Button href={resolve('/')}>VOLTAR</Button>
 	<div class="flex flex-col gap-1.5">
 		<Label>MERCADO:</Label>
@@ -77,6 +79,11 @@
 	</div>
 </div>
 
+<div class="flex justify-center">
+	<InputsDeMediasMoveis bind:numeros={periodosParaMediasMoveisSimples} />
+	<!-- <InputsDeMediasMoveis /> -->
+</div>
+
 <div class="mx-6 border rounded p-4 bg-slate-50">
 	{#if periodos === '' || Number(periodos) < 1}
 		<div class="flex justify-center text-muted-foreground py-8">
@@ -84,17 +91,12 @@
 		</div>
 	{:else}
 		<div class="min-h-100">
-			<Grafico periodos={Number(periodos)} {simbolo} {intervalo} />
-		</div>
-	{/if}
-</div>
-
-<div class="mx-4 border rounded p-4 bg-slate-50">
-	{#if periodos === '' || Number(periodos) < 1}
-		<div class="flex justify-center">Informe um número inteiro positivo.</div>
-	{:else}
-		<div class=" min-h-100">
-			<Grafico periodos={Number(periodos)} {simbolo} {intervalo} />
+			<Grafico
+				periodos={Number(periodos)}
+				{simbolo}
+				{intervalo}
+				{periodosParaMediasMoveisSimples}
+			/>
 		</div>
 	{/if}
 </div>

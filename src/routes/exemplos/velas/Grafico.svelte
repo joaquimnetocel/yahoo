@@ -1,5 +1,8 @@
 <script lang="ts">
 	import GraficoDeVelas from '$lib/apexcharts/componentes/GraficoDeVelas.svelte';
+	import { funcaoCriarMediaMovelParaApexcharts } from '$lib/apexcharts/funcoes/funcaoCriarMediaMovelParaApexcharts';
+	import type { tipoLinhaDoApexCharts } from '$lib/apexcharts/tipos/tipoLinhaDoApexcharts';
+	import type { tipoPontoDoApexCharts } from '$lib/apexcharts/tipos/tipoPontoDoApexcharts';
 	import { Spinner } from '$lib/shadcn/componentes/ui/spinner/index.js';
 	import { funcaoConverterDeYahooFinanceParaApexchart } from '$lib/yahooFinance/funcoes/funcaoConverterDeYahooFinanceParaApexchart';
 	import { remotaPegarDadosDoYahooFinance } from '$lib/yahooFinance/funcoes/remotaPegarDadosDoYahooFinance/remotaPegarDadosDoYahooFinance.remote';
@@ -9,7 +12,15 @@
 		periodos,
 		simbolo,
 		intervalo,
-	}: { periodos: number; simbolo: string; intervalo: tipoIntervalo } = $props();
+		periodosParaMediasMoveisSimples = [],
+		// periodosParaMediasMoveisExponenciais = [],
+	}: {
+		periodos: number;
+		simbolo: string;
+		intervalo: tipoIntervalo;
+		periodosParaMediasMoveisSimples?: number[];
+		// periodosParaMediasMoveisExponenciais?: number[];
+	} = $props();
 
 	const promessa = $derived(
 		remotaPegarDadosDoYahooFinance({
@@ -22,6 +33,23 @@
 	const velas = $derived(
 		promessa.ready ? funcaoConverterDeYahooFinanceParaApexchart(promessa.current) : [],
 	);
+
+	const mediasMoveisSimples: tipoLinhaDoApexCharts[] = $derived.by(() => {
+		return periodosParaMediasMoveisSimples.map((periodo) => {
+			const pontosDoApexcharts: tipoPontoDoApexCharts[] = funcaoCriarMediaMovelParaApexcharts({
+				velas,
+				periodo,
+			});
+			const linhaDoApexcharts: tipoLinhaDoApexCharts = {
+				opcoes: {
+					descricao: `MÉDIA MÓVEL SIMPLES (${periodo})`,
+					cor: 'blue',
+				},
+				dados: pontosDoApexcharts,
+			};
+			return linhaDoApexcharts;
+		});
+	});
 </script>
 
 <div class="border rounded p-4 bg-slate-50 min-h-100">
@@ -34,6 +62,6 @@
 		<p class="text-destructive">Erro: {promessa.error.message}</p>
 	{:else}
 		<h2 class="text-lg font-bold mb-2">EXIBINDO GRÁFICO DE: {simbolo}</h2>
-		<GraficoDeVelas {velas} exibir={true} />
+		<GraficoDeVelas {velas} exibir={true} linhas={mediasMoveisSimples} />
 	{/if}
 </div>
