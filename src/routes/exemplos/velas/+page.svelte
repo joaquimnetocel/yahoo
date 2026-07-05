@@ -8,6 +8,7 @@
 	import type { tipoIntervaloDoYahooFinance } from '$lib/yahooFinance/tipos/tipoIntervaloDoYahooFinance';
 	import type { tipoMercados } from '$lib/yahooFinance/tipos/tipoMercados';
 	import { untrack } from 'svelte';
+	import Drawer from './Drawer.svelte';
 	import Grafico from './Grafico.svelte';
 	import InputsDeMediasMoveis from './InputsDeMediasMoveis.svelte';
 	import SelectDeAtivo from './SelectDeAtivo.svelte';
@@ -52,14 +53,21 @@
 	<div class="flex flex-col gap-1.5">
 		<SelectDeIntervalo bind:intervalo />
 	</div>
-</div>
-
-<div class="flex justify-center">
-	<InputsDeMediasMoveis
-		bind:numeros={periodosParaMediasMoveisSimples}
-		titulo="MÉDIAS MÓVEIS SIMPLES (SMA)"
-	/>
-	<!-- <InputsDeMediasMoveis /> -->
+	<div class="flex flex-col gap-1.5">
+		<Label>MÉDIAS MÓVEIS</Label>
+		<Drawer
+			titulo="MÉDIAS MÓVEIS"
+			descricao="Determine as médias móveis a serem exibidas no gráfico."
+		>
+			<div class="flex justify-center">
+				<InputsDeMediasMoveis
+					bind:numeros={periodosParaMediasMoveisSimples}
+					titulo="MÉDIAS MÓVEIS SIMPLES (SMA)"
+				/>
+				<!-- <InputsDeMediasMoveis /> -->
+			</div>
+		</Drawer>
+	</div>
 </div>
 
 <div class="mx-6 border rounded p-4 bg-slate-50">
@@ -79,4 +87,3 @@
 		</div>
 	{/if}
 </div>
-QUANTIDADE DE VELAS: {quantidadeDeVelas}
