@@ -3,20 +3,23 @@
 	import { Button } from '$lib/shadcn/componentes/ui/button/index.js';
 	import { Input } from '$lib/shadcn/componentes/ui/input/index.js';
 	import { Label } from '$lib/shadcn/componentes/ui/label/index.js';
-	import * as Select from '$lib/shadcn/componentes/ui/select/index.js';
 	import { constChavesMercados } from '$lib/yahooFinance/constantes/constChavesMercados';
-	import { constIntervalosDoYahooFinance } from '$lib/yahooFinance/constantes/constIntervalosDoYahooFinance';
 	import { constMercados } from '$lib/yahooFinance/constantes/constMercados';
 	import type { tipoIntervaloDoYahooFinance } from '$lib/yahooFinance/tipos/tipoIntervaloDoYahooFinance';
 	import type { tipoMercados } from '$lib/yahooFinance/tipos/tipoMercados';
+	import { untrack } from 'svelte';
 	import Grafico from './Grafico.svelte';
 	import InputsDeMediasMoveis from './InputsDeMediasMoveis.svelte';
+	import SelectDeAtivo from './SelectDeAtivo.svelte';
+	import SelectDeIntervalo from './SelectDeIntervalo.svelte';
+	import SelectDeMercado from './SelectDeMercado.svelte';
 
 	let mercado = $state<keyof tipoMercados>(constChavesMercados[0]);
 	let simbolo = $state('');
 	let periodos = $state('300');
 	let intervalo = $state<tipoIntervaloDoYahooFinance>('1d');
 	let periodosParaMediasMoveisSimples = $state<number[]>([10, 50, 70]);
+	let quantidadeDeVelas = $state(300);
 	const ativos = $derived(constMercados[mercado].ativos);
 
 	$effect(() => {
@@ -26,61 +29,36 @@
 			simbolo = '';
 		}
 	});
+
+	// REMOVE AS MÉDIAS MÓVEIS IMPOSSÍVEIS DE CALCULAR DEVIDO À QUANTIDADE DE VELAS
+	$effect(() => {
+		const aux = untrack(() => periodosParaMediasMoveisSimples);
+		periodosParaMediasMoveisSimples = aux.filter((numero) => numero < quantidadeDeVelas);
+	});
 </script>
 
 <div class="p-6 flex flex-wrap items-end gap-4 justify-center">
 	<Button href={resolve('/')}>VOLTAR</Button>
 	<div class="flex flex-col gap-1.5">
-		<Label>MERCADO:</Label>
-		<Select.Root type="single" bind:value={mercado}>
-			<Select.Trigger class="w-40">{constMercados[mercado].titulo}</Select.Trigger>
-			<Select.Content>
-				{#each constChavesMercados as chave (chave)}
-					<Select.Item value={chave} label={constMercados[chave].titulo}>
-						{constMercados[chave].titulo}
-					</Select.Item>
-				{/each}
-			</Select.Content>
-		</Select.Root>
+		<SelectDeMercado bind:mercado />
 	</div>
 	<div class="flex flex-col gap-1.5">
-		<Label>ATIVO:</Label>
-		<Select.Root type="single" bind:value={simbolo}>
-			<Select.Trigger class="w-80">
-				{constMercados[mercado].ativos.find((ativo) => ativo.ticker === simbolo)?.nome}
-			</Select.Trigger>
-			<Select.Content class="max-h-64 overflow-y-auto">
-				{#each ativos as ativo (ativo.ticker)}
-					<Select.Item value={ativo.ticker} label={ativo.nome}>
-						{ativo.nome}
-					</Select.Item>
-				{/each}
-			</Select.Content>
-		</Select.Root>
+		<SelectDeAtivo {ativos} {mercado} bind:simbolo />
 	</div>
 	<div class="flex flex-col gap-1.5">
 		<Label>PERÍODOS:</Label>
 		<Input bind:value={periodos} type="number" min="1" step="1" class="w-24" />
 	</div>
 	<div class="flex flex-col gap-1.5">
-		<Label>INTERVALO:</Label>
-		<Select.Root type="single" bind:value={intervalo}>
-			<Select.Trigger class="w-18">
-				{intervalo}
-			</Select.Trigger>
-			<Select.Content class="max-h-64 overflow-y-auto">
-				{#each constIntervalosDoYahooFinance as intervaloCorrente (intervaloCorrente)}
-					<Select.Item value={intervaloCorrente} label={intervaloCorrente}>
-						{intervaloCorrente}
-					</Select.Item>
-				{/each}
-			</Select.Content>
-		</Select.Root>
+		<SelectDeIntervalo bind:intervalo />
 	</div>
 </div>
 
 <div class="flex justify-center">
-	<InputsDeMediasMoveis bind:numeros={periodosParaMediasMoveisSimples} />
+	<InputsDeMediasMoveis
+		bind:numeros={periodosParaMediasMoveisSimples}
+		titulo="MÉDIAS MÓVEIS SIMPLES (SMA)"
+	/>
 	<!-- <InputsDeMediasMoveis /> -->
 </div>
 
@@ -96,7 +74,9 @@
 				{simbolo}
 				{intervalo}
 				{periodosParaMediasMoveisSimples}
+				bind:quantidadeDeVelas
 			/>
 		</div>
 	{/if}
 </div>
+QUANTIDADE DE VELAS: {quantidadeDeVelas}

@@ -9,12 +9,15 @@
 	import type { tipoIntervalo } from '$lib/yahooFinance/tipos/tipoIntervalo';
 
 	let {
+		// eslint-disable-next-line no-useless-assignment
+		quantidadeDeVelas = $bindable(),
 		periodos,
 		simbolo,
 		intervalo,
 		periodosParaMediasMoveisSimples = [],
 		// periodosParaMediasMoveisExponenciais = [],
 	}: {
+		quantidadeDeVelas?: number;
 		periodos: number;
 		simbolo: string;
 		intervalo: tipoIntervalo;
@@ -49,6 +52,12 @@
 			};
 			return linhaDoApexcharts;
 		});
+	});
+
+	$effect(() => {
+		if (promessa.ready) {
+			quantidadeDeVelas = velas.length;
+		}
 	});
 </script>
 
