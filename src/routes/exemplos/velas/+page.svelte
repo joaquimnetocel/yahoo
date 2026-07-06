@@ -19,6 +19,7 @@
 	let periodos = $state('300');
 	let intervalo = $state<tipoIntervaloDoYahooFinance>('1d');
 	let periodosParaMediasMoveisSimples = $state<number[]>([10, 50, 70]);
+	let periodosParaMediasMoveisExponenciais = $state<number[]>([10, 50, 70]);
 	const ativos = $derived(constMercados[mercado].ativos);
 
 	$effect(() => {
@@ -69,5 +70,11 @@
 		</div>
 	</div>
 {:else}
-	<Leitura {intervalo} {periodos} {simbolo} bind:periodosParaMediasMoveisSimples />
+	<Leitura
+		{intervalo}
+		{periodos}
+		{simbolo}
+		bind:periodosParaMediasMoveisSimples
+		bind:periodosParaMediasMoveisExponenciais
+	/>
 {/if}

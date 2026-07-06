@@ -4,18 +4,20 @@
 	import { remotaPegarDadosDoYahooFinance } from '$lib/yahooFinance/funcoes/remotaPegarDadosDoYahooFinance/remotaPegarDadosDoYahooFinance.remote';
 	import type { tipoIntervaloDoYahooFinance } from '$lib/yahooFinance/tipos/tipoIntervaloDoYahooFinance';
 	import { untrack } from 'svelte';
-	import MediasMoveis from './MediasMoveis.svelte';
+	import Indicadores from './Indicadores.svelte';
 
 	let {
 		simbolo,
 		periodos,
 		intervalo,
 		periodosParaMediasMoveisSimples = $bindable(),
+		periodosParaMediasMoveisExponenciais = $bindable(),
 	}: {
 		simbolo: string;
 		periodos: string;
 		intervalo: tipoIntervaloDoYahooFinance;
 		periodosParaMediasMoveisSimples: number[];
+		periodosParaMediasMoveisExponenciais: number[];
 	} = $props();
 
 	const promessa = $derived(
@@ -37,6 +39,8 @@
 		if (promessa.ready) {
 			const aux = untrack(() => periodosParaMediasMoveisSimples);
 			periodosParaMediasMoveisSimples = aux.filter((numero) => numero < quantidadeDeVelas);
+			const aux2 = untrack(() => periodosParaMediasMoveisExponenciais);
+			periodosParaMediasMoveisExponenciais = aux2.filter((numero) => numero < quantidadeDeVelas);
 		}
 	});
 </script>
@@ -50,6 +54,6 @@
 	{:else if promessa.error}
 		<p class="text-destructive">Erro: {promessa.error.message}</p>
 	{:else}
-		<MediasMoveis {velas} {simbolo} {periodosParaMediasMoveisSimples} />
+		<Indicadores {velas} {simbolo} {periodosParaMediasMoveisSimples} />
 	{/if}
 </div>

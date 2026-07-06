@@ -2,7 +2,7 @@ import type { tipoPontoDoApexCharts } from '$lib/apexcharts/tipos/tipoPontoDoApe
 import type { tipoVelaDoApexcharts } from '$lib/apexcharts/tipos/tipoVelaDoApexcharts';
 import { indicadorRsi } from '$lib/indicadores/indicadorRsi';
 
-export function funcaoCriarRsiParaApexcharts({
+export function funcaoPontosDoRsi({
 	velas,
 	periodo,
 }: {
