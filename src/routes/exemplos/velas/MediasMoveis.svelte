@@ -12,7 +12,7 @@
 		// periodosParaMediasMoveisExponenciais = [],
 	}: {
 		simbolo: string;
-		periodosParaMediasMoveisSimples?: number[];
+		periodosParaMediasMoveisSimples: number[];
 		velas: tipoVelaDoApexcharts[];
 		// periodosParaMediasMoveisExponenciais?: number[];
 	} = $props();
@@ -33,12 +33,6 @@
 			return linhaDoApexcharts;
 		});
 	});
-
-	// $effect(() => {
-	// 	if (promessa.ready) {
-	// 		quantidadeDeVelas = velas.length;
-	// 	}
-	// });
 </script>
 
 <h2 class="text-lg font-bold mb-2">EXIBINDO GRÁFICO DE: {simbolo}</h2>
