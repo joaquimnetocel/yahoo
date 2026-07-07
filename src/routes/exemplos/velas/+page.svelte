@@ -19,7 +19,7 @@
 	let simbolo = $state(constMercados[constChavesMercados[0]].ativos[0].ticker);
 	let periodos = $state('300');
 	let intervalo = $state<tipoIntervaloDoYahooFinance>('1d');
-	let periodosParaMediasMoveis = $state<number[]>([10, 50, 70]);
+	let periodosParaMediasMoveis = $state<number[]>([10, 50]);
 	let tipoDeMediaMovel = $state<'simples' | 'exponencial'>('simples');
 
 	const ativos = $derived(constMercados[mercado].ativos);

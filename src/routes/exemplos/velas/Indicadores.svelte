@@ -1,7 +1,7 @@
 <script lang="ts">
-	import GraficoDeVelas from '$lib/apexcharts/componentes/GraficoDeVelas.svelte';
 	import { funcaoLinhasDeMediasMoveis } from '$lib/apexcharts/funcoes/funcaoLinhasDeMediasMoveis';
 	import type { tipoVelaDoApexcharts } from '$lib/apexcharts/tipos/tipoVelaDoApexcharts';
+	import Trades from './Trades.svelte';
 
 	let {
 		simbolo,
@@ -26,5 +26,4 @@
 	const linhas = $derived([...mediasMoveis]);
 </script>
 
-<h2 class="text-lg font-bold mb-2">EXIBINDO GRÁFICO DE: {simbolo}</h2>
-<GraficoDeVelas {velas} exibir={true} {linhas} />
+<Trades {velas} {linhas} {simbolo} />
