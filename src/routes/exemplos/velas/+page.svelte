@@ -13,13 +13,15 @@
 	import SelectDeAtivo from './SelectDeAtivo.svelte';
 	import SelectDeIntervalo from './SelectDeIntervalo.svelte';
 	import SelectDeMercado from './SelectDeMercado.svelte';
+	import SelectDeTipoDeMediaMovel from './SelectDeTipoDeMediaMovel.svelte';
 
 	let mercado = $state<keyof tipoMercados>(constChavesMercados[0]);
 	let simbolo = $state(constMercados[constChavesMercados[0]].ativos[0].ticker);
 	let periodos = $state('300');
 	let intervalo = $state<tipoIntervaloDoYahooFinance>('1d');
-	let periodosParaMediasMoveisSimples = $state<number[]>([10, 50, 70]);
-	let periodosParaMediasMoveisExponenciais = $state<number[]>([10, 50, 70]);
+	let periodosParaMediasMoveis = $state<number[]>([10, 50, 70]);
+	let tipoDeMediaMovel = $state<'simples' | 'exponencial'>('simples');
+
 	const ativos = $derived(constMercados[mercado].ativos);
 
 	$effect(() => {
@@ -52,12 +54,14 @@
 			titulo="MÉDIAS MÓVEIS"
 			descricao="Determine as médias móveis a serem exibidas no gráfico."
 		>
-			<div class="flex justify-center">
-				<InputsDeMediasMoveis
-					bind:numeros={periodosParaMediasMoveisSimples}
-					titulo="MÉDIAS MÓVEIS SIMPLES (SMA)"
-				/>
-				<!-- <InputsDeMediasMoveis /> -->
+			<div class="flex flex-col items-center gap-2">
+				<SelectDeTipoDeMediaMovel bind:tipoDeMediaMovel />
+				<div class="flex justify-center">
+					<InputsDeMediasMoveis
+						bind:numeros={periodosParaMediasMoveis}
+						titulo={`MÉDIAS MÓVEIS ${tipoDeMediaMovel === 'simples' ? 'SIMPLES' : 'EXPONENCIAIS'} (${tipoDeMediaMovel === 'simples' ? 'SMA' : 'EMA'})`}
+					/>
+				</div>
 			</div>
 		</Drawer>
 	</div>
@@ -70,11 +74,5 @@
 		</div>
 	</div>
 {:else}
-	<Leitura
-		{intervalo}
-		{periodos}
-		{simbolo}
-		bind:periodosParaMediasMoveisSimples
-		bind:periodosParaMediasMoveisExponenciais
-	/>
+	<Leitura {intervalo} {periodos} {simbolo} bind:periodosParaMediasMoveis {tipoDeMediaMovel} />
 {/if}

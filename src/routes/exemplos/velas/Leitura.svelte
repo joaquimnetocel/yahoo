@@ -10,14 +10,14 @@
 		simbolo,
 		periodos,
 		intervalo,
-		periodosParaMediasMoveisSimples = $bindable(),
-		periodosParaMediasMoveisExponenciais = $bindable(),
+		periodosParaMediasMoveis = $bindable(),
+		tipoDeMediaMovel = 'simples',
 	}: {
 		simbolo: string;
 		periodos: string;
 		intervalo: tipoIntervaloDoYahooFinance;
-		periodosParaMediasMoveisSimples: number[];
-		periodosParaMediasMoveisExponenciais: number[];
+		periodosParaMediasMoveis: number[];
+		tipoDeMediaMovel?: 'simples' | 'exponencial';
 	} = $props();
 
 	const promessa = $derived(
@@ -37,10 +37,8 @@
 	// REMOVE AS MÉDIAS MÓVEIS IMPOSSÍVEIS DE CALCULAR DEVIDO À QUANTIDADE DE VELAS
 	$effect(() => {
 		if (promessa.ready) {
-			const aux = untrack(() => periodosParaMediasMoveisSimples);
-			periodosParaMediasMoveisSimples = aux.filter((numero) => numero < quantidadeDeVelas);
-			const aux2 = untrack(() => periodosParaMediasMoveisExponenciais);
-			periodosParaMediasMoveisExponenciais = aux2.filter((numero) => numero < quantidadeDeVelas);
+			const aux = untrack(() => periodosParaMediasMoveis);
+			periodosParaMediasMoveis = aux.filter((numero) => numero < quantidadeDeVelas);
 		}
 	});
 </script>
@@ -54,6 +52,6 @@
 	{:else if promessa.error}
 		<p class="text-destructive">Erro: {promessa.error.message}</p>
 	{:else}
-		<Indicadores {velas} {simbolo} {periodosParaMediasMoveisSimples} />
+		<Indicadores {velas} {simbolo} {periodosParaMediasMoveis} {tipoDeMediaMovel} />
 	{/if}
 </div>

@@ -19,7 +19,7 @@ export function funcaoLinhasDeMediasMoveis({
 		});
 		const linhaDaMediaMovel: tipoLinhaDoApexCharts = {
 			opcoes: {
-				descricao: `MÉDIA MÓVEL SIMPLES (${periodo})`,
+				descricao: `MÉDIA MÓVEL ${tipo === 'simples' ? 'SIMPLES' : 'EXPONENCIAL'} (${periodo})`,
 				cor: 'blue',
 			},
 			dados: pontosDaMediaMovel,

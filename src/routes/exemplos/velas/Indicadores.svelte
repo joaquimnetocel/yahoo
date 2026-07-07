@@ -5,34 +5,25 @@
 
 	let {
 		simbolo,
-		periodosParaMediasMoveisSimples = [],
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		periodosParaMediasMoveisExponenciais = [],
+		periodosParaMediasMoveis = [],
 		velas,
+		tipoDeMediaMovel,
 	}: {
 		simbolo: string;
-		periodosParaMediasMoveisSimples?: number[];
-		periodosParaMediasMoveisExponenciais?: number[];
+		periodosParaMediasMoveis?: number[];
 		velas: tipoVelaDoApexcharts[];
+		tipoDeMediaMovel: 'simples' | 'exponencial';
 	} = $props();
 
-	const mediasMoveisSimples = $derived(
+	const mediasMoveis = $derived(
 		funcaoLinhasDeMediasMoveis({
-			periodos: periodosParaMediasMoveisSimples,
-			tipo: 'simples',
+			periodos: periodosParaMediasMoveis,
+			tipo: tipoDeMediaMovel,
 			velas,
 		}),
 	);
 
-	// const mediasMoveisExponenciais = $derived(
-	// 	funcaoLinhasDeMediasMoveis({
-	// 		periodos: periodosParaMediasMoveisExponenciais,
-	// 		tipo: 'exponencial',
-	// 		velas,
-	// 	}),
-	// );
-
-	const linhas = $derived([...mediasMoveisSimples]);
+	const linhas = $derived([...mediasMoveis]);
 </script>
 
 <h2 class="text-lg font-bold mb-2">EXIBINDO GRÁFICO DE: {simbolo}</h2>

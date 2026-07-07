@@ -1,6 +1,6 @@
 import { SMA } from 'technicalindicators';
 
-export function indicadorMediaMovel({
+export function indicadorMediaMovelSimples({
 	valores,
 	periodo,
 }: {

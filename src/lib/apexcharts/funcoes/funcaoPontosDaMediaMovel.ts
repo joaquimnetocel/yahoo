@@ -1,7 +1,7 @@
 import type { tipoPontoDoApexCharts } from '$lib/apexcharts/tipos/tipoPontoDoApexcharts';
 import type { tipoVelaDoApexcharts } from '$lib/apexcharts/tipos/tipoVelaDoApexcharts';
-import { indicadorMediaMovel } from '$lib/indicadores/indicadorMediaMovel';
 import { indicadorMediaMovelExponencial } from '$lib/indicadores/indicadorMediaMovelExponencial';
+import { indicadorMediaMovelSimples } from '$lib/indicadores/indicadorMediaMovelSimples';
 
 export function funcaoPontosDaMediaMovel({
 	velas,
@@ -14,7 +14,8 @@ export function funcaoPontosDaMediaMovel({
 }): tipoPontoDoApexCharts[] {
 	if (velas === undefined) return [];
 	const fechamentos = velas.map((current) => current.y[3]);
-	const indicador = tipo === 'exponencial' ? indicadorMediaMovelExponencial : indicadorMediaMovel;
+	const indicador =
+		tipo === 'exponencial' ? indicadorMediaMovelExponencial : indicadorMediaMovelSimples;
 	const mediasmoveis = indicador({
 		periodo,
 		valores: fechamentos,
