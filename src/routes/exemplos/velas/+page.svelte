@@ -67,12 +67,12 @@
 	</div>
 </div>
 
-{#if periodos === '' || Number(periodos) < 1}
-	<div class="mx-6 border rounded p-4 bg-slate-50">
+<div class="mx-6 border rounded p-4 bg-slate-50">
+	{#if periodos === '' || Number(periodos) < 1}
 		<div class="flex justify-center text-muted-foreground py-8">
 			Informe um número inteiro positivo.
 		</div>
-	</div>
-{:else}
-	<Leitura {intervalo} {periodos} {simbolo} bind:periodosParaMediasMoveis {tipoDeMediaMovel} />
-{/if}
+	{:else}
+		<Leitura {intervalo} {periodos} {simbolo} bind:periodosParaMediasMoveis {tipoDeMediaMovel} />
+	{/if}
+</div>

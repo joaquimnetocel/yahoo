@@ -43,7 +43,7 @@
 	});
 </script>
 
-<div class="mx-6 border rounded p-4 bg-slate-50 min-h-100">
+<div class="min-h-l00">
 	{#if promessa.loading}
 		<div class="flex h-87.5 items-center justify-center flex-col gap-2">
 			<Spinner class="size-8" />
