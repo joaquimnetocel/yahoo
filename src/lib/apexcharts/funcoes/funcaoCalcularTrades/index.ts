@@ -1,3 +1,4 @@
+import type { tipoLinhaDoApexCharts } from '$lib/apexcharts/tipos/tipoLinhaDoApexcharts';
 import type { tipoPontoDoApexCharts } from '$lib/apexcharts/tipos/tipoPontoDoApexcharts';
 import type { tipoVelaDoApexcharts } from '$lib/apexcharts/tipos/tipoVelaDoApexcharts';
 import { criterio } from './criterios';
@@ -9,9 +10,12 @@ export function funcaoCalcularTrades({
 	linhas,
 }: {
 	velas: tipoVelaDoApexcharts[];
-	linhas: tipoPontoDoApexCharts[][];
+	linhas: tipoLinhaDoApexCharts[];
 }) {
 	if (velas === undefined) throw Error;
+	if (linhas.length < criterio.minimoDeLinhas) {
+		return [];
+	}
 	const operacoes = funcaoOperacoes({
 		possiveisPontosDeCompra: criterio.funcaoPossiveisPontosDeCompra({ velas, linhas }),
 		possiveisPontosDeVenda: criterio.funcaoPossiveisPontosDeVenda({ velas, linhas }),

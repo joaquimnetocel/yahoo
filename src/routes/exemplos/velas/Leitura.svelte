@@ -32,13 +32,11 @@
 		promessa.ready ? funcaoConverterDeYahooFinanceParaApexchart(promessa.current) : [],
 	);
 
-	const quantidadeDeVelas = $derived(velas.length);
-
 	// REMOVE AS MÉDIAS MÓVEIS IMPOSSÍVEIS DE CALCULAR DEVIDO À QUANTIDADE DE VELAS
 	$effect(() => {
 		if (promessa.ready) {
 			const aux = untrack(() => periodosParaMediasMoveis);
-			periodosParaMediasMoveis = aux.filter((numero) => numero < quantidadeDeVelas);
+			periodosParaMediasMoveis = aux.filter((numero) => numero < velas.length);
 		}
 	});
 </script>

@@ -1,3 +1,4 @@
+import type { tipoLinhaDoApexCharts } from '$lib/apexcharts/tipos/tipoLinhaDoApexcharts';
 import type { tipoPontoDoApexCharts } from '$lib/apexcharts/tipos/tipoPontoDoApexcharts';
 import type { tipoVelaDoApexcharts } from '$lib/apexcharts/tipos/tipoVelaDoApexcharts';
 
@@ -6,11 +7,11 @@ const funcaoPossiveisPontosDeCompra = function ({
 	linhas,
 }: {
 	velas: tipoVelaDoApexcharts[];
-	linhas: tipoPontoDoApexCharts[][];
+	linhas: tipoLinhaDoApexCharts[];
 }): tipoPontoDoApexCharts[] {
 	return velas.map((velaCorrente, contador): tipoPontoDoApexCharts => {
-		const mediaMovelCurtaCorrente = linhas[0][contador].y;
-		const mediaMovelLongaCorrente = linhas[1][contador].y;
+		const mediaMovelCurtaCorrente = linhas[0].pontos[contador].y;
+		const mediaMovelLongaCorrente = linhas[1].pontos[contador].y;
 
 		if (mediaMovelCurtaCorrente === null || mediaMovelLongaCorrente === null) {
 			return {
@@ -36,11 +37,11 @@ const funcaoPossiveisPontosDeVenda = function ({
 	linhas,
 }: {
 	velas: tipoVelaDoApexcharts[];
-	linhas: tipoPontoDoApexCharts[][];
+	linhas: tipoLinhaDoApexCharts[];
 }): tipoPontoDoApexCharts[] {
 	return velas.map((velaCorrente, contador): tipoPontoDoApexCharts => {
-		const mediaMovelCurtaCorrente = linhas[0][contador].y;
-		const mediaMovelLongaCorrente = linhas[1][contador].y;
+		const mediaMovelCurtaCorrente = linhas[0].pontos[contador].y;
+		const mediaMovelLongaCorrente = linhas[1].pontos[contador].y;
 		if (mediaMovelCurtaCorrente === null || mediaMovelLongaCorrente === null) {
 			return {
 				x: velaCorrente.x,
@@ -64,4 +65,5 @@ export const criterio = {
 	funcaoPossiveisPontosDeCompra,
 	funcaoPossiveisPontosDeVenda,
 	stop: undefined,
+	minimoDeLinhas: 2,
 };

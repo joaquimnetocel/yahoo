@@ -1,6 +1,4 @@
 <script lang="ts">
-	import Button from '$lib/shadcn/componentes/ui/button/button.svelte';
-
 	import { buttonVariants } from '$lib/shadcn/componentes/ui/button/index.js';
 
 	import * as Drawer from '$lib/shadcn/componentes/ui/drawer/index.js';
@@ -13,7 +11,14 @@
 
 <Drawer.Root direction="top">
 	<Drawer.Trigger>
-		<Button class="cursor-pointer">MEDIAS MÓVEIS...</Button>
+		<div
+			class={buttonVariants({
+				variant: 'default',
+				class: 'cursor-pointer',
+			})}
+		>
+			MÉDIAS MÓVEIS...
+		</div>
 	</Drawer.Trigger>
 
 	<Drawer.Content

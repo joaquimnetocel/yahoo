@@ -81,7 +81,7 @@
 				...linhas.map((linha) => ({
 					name: linha.opcoes.descricao,
 					type: 'line' as const,
-					data: linha.dados,
+					data: linha.pontos,
 					color: linha.opcoes.cor,
 				})),
 			];

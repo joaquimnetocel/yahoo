@@ -16,7 +16,16 @@
 		{#each numeros as _, index (index)}
 			<!-- 2. Mudamos esta div para 'flex' para colocar o Input e o Botão lado a lado e alinhados ao centro verticalmente -->
 			<div class="flex items-center gap-1 w-full justify-center">
-				<Input type="number" bind:value={numeros[index]} class="w-20" />
+				<Input
+					type="number"
+					min={1}
+					bind:value={numeros[index]}
+					class="w-20"
+					oninput={(e) => {
+						const alvo = e.currentTarget;
+						numeros[index] = alvo.value === '' ? 1 : Number(alvo.value);
+					}}
+				/>
 
 				<Button
 					variant="destructive"
@@ -35,7 +44,7 @@
 	<Button
 		class="w-full cursor-pointer"
 		onclick={() => {
-			numeros.push(0);
+			numeros.push(2);
 		}}
 		size="sm"
 	>

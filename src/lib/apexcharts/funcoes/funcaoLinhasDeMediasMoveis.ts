@@ -22,7 +22,7 @@ export function funcaoLinhasDeMediasMoveis({
 				descricao: `MÉDIA MÓVEL ${tipo === 'simples' ? 'SIMPLES' : 'EXPONENCIAL'} (${periodo})`,
 				cor: 'blue',
 			},
-			dados: pontosDaMediaMovel,
+			pontos: pontosDaMediaMovel,
 		};
 		return linhaDaMediaMovel;
 	});

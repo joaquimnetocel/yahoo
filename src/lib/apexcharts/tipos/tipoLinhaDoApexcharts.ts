@@ -5,5 +5,5 @@ export type tipoLinhaDoApexCharts = {
 		descricao: string;
 		cor: string;
 	};
-	dados: tipoPontoDoApexCharts[];
+	pontos: tipoPontoDoApexCharts[];
 };
