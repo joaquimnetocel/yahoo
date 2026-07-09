@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { buttonVariants } from '$lib/shadcn/componentes/ui/button/index.js';
-
 	import * as Drawer from '$lib/shadcn/componentes/ui/drawer/index.js';
-
 	import type { Snippet } from 'svelte';
 
 	let { children, titulo, descricao }: { children: Snippet; titulo: string; descricao: string } =
