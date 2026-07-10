@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Label } from '$lib/shadcn/componentes/ui/label/index.js';
 	import * as RadioGroup from '$lib/shadcn/componentes/ui/radio-group/index.js';
-	import { estados } from '$lib/store/estados.svelte';
+	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
 </script>
 
 <Label>TIPO DE MÉDIA MÓVEL:</Label>

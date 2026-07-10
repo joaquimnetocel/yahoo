@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Label } from '$lib/shadcn/componentes/ui/label/index.js';
 	import * as Select from '$lib/shadcn/componentes/ui/select/index.js';
-	import { estados } from '$lib/store/estados.svelte';
+	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
 	import { constChavesMercados } from '$lib/yahooFinance/constantes/constChavesMercados';
 	import { constMercados } from '$lib/yahooFinance/constantes/constMercados';
 </script>

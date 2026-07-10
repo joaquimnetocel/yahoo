@@ -3,7 +3,7 @@
 	import { Button } from '$lib/shadcn/componentes/ui/button/index.js';
 	import { Input } from '$lib/shadcn/componentes/ui/input/index.js';
 	import { Label } from '$lib/shadcn/componentes/ui/label/index.js';
-	import { estados } from '$lib/store/estados.svelte';
+	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
 	import Drawer from './Drawer.svelte';
 	import InputsDeMediasMoveis from './InputsDeMediasMoveis.svelte';
 	import RadioDeTipoDeMediaMovel from './RadioDeTipoDeMediaMovel.svelte';

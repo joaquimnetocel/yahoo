@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Label } from '$lib/shadcn/componentes/ui/label/index.js';
 	import * as Select from '$lib/shadcn/componentes/ui/select/index.js';
-	import { deriveds } from '$lib/store/deriveds.svelte';
-	import { estados } from '$lib/store/estados.svelte';
+	import { deriveds } from '$lib/stores/storeParametrosGraficos/deriveds.svelte';
+	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
 	import { constMercados } from '$lib/yahooFinance/constantes/constMercados';
 
 	$effect(() => {
