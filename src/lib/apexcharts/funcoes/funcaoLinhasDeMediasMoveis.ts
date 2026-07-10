@@ -11,7 +11,8 @@ export function funcaoLinhasDeMediasMoveis({
 	periodos: number[];
 	tipo: 'simples' | 'exponencial';
 }): tipoLinhaDoApexCharts[] {
-	return periodos.map((periodo) => {
+	const periodosValidos = periodos.filter((numero) => numero < velas.length);
+	return periodosValidos.map((periodo) => {
 		const pontosDaMediaMovel = funcaoPontosDaMediaMovel({
 			velas,
 			periodo,

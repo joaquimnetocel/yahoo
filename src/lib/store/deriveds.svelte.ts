@@ -1,10 +1,10 @@
 import { funcaoCalcularTrades } from '$lib/apexcharts/funcoes/funcaoCalcularTrades';
 import { funcaoExtrairLucroDeTrades } from '$lib/apexcharts/funcoes/funcaoExtrairLucroDeTrades';
+import { funcaoLinhasDeMediasMoveis } from '$lib/apexcharts/funcoes/funcaoLinhasDeMediasMoveis';
 import { funcaoAtivosDeUmMercado } from '$lib/yahooFinance/funcoes/funcaoAtivosDeUmMercado.svelte';
+import { funcaoConverterDeYahooFinanceParaApexchart } from '$lib/yahooFinance/funcoes/funcaoConverterDeYahooFinanceParaApexchart';
 import { remotaPegarDadosDoYahooFinance } from '$lib/yahooFinance/funcoes/remotaPegarDadosDoYahooFinance/remotaPegarDadosDoYahooFinance.remote';
 import { estados } from './estados.svelte';
-import { funcaoMediasMoveis } from './funcoesParaDeriveds/funcaoMediasMoveis';
-import { funcaoVelas } from './funcoesParaDeriveds/funcaoVelas.svelte';
 
 class Deriveds {
 	ativos = $derived(funcaoAtivosDeUmMercado({ mercado: estados.mercado }));
@@ -15,14 +15,16 @@ class Deriveds {
 			intervalo: estados.intervalo,
 		}),
 	);
-	velas = $derived(
-		funcaoVelas({
-			promessa: this.promessaDeDadosDoYahooFinance,
-		}),
-	);
+	velas = $derived.by(() => {
+		if (this.promessaDeDadosDoYahooFinance.ready) {
+			return funcaoConverterDeYahooFinanceParaApexchart(this.promessaDeDadosDoYahooFinance.current);
+		}
+		return [];
+	});
 	mediasMoveis = $derived(
-		funcaoMediasMoveis({
-			estados,
+		funcaoLinhasDeMediasMoveis({
+			periodos: estados.periodosParaMediasMoveis,
+			tipo: estados.tipoDeMediaMovel,
 			velas: this.velas,
 		}),
 	);
