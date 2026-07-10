@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Button } from '$lib/shadcn/componentes/ui/button/index.js';
 	import { Input } from '$lib/shadcn/componentes/ui/input/index.js';
+	import { deriveds } from '$lib/store/deriveds.svelte';
+	import { estados } from '$lib/store/estados.svelte';
 	import { untrack } from 'svelte';
-	import { deriveds } from '../store/deriveds.svelte';
-	import { estados } from '../store/estados.svelte';
 
 	let { titulo = 'PREENCHA OS VALORES' }: { titulo?: string } = $props();
 

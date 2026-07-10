@@ -1,9 +1,9 @@
 <script lang="ts">
 	import GraficoDeVelas from '$lib/apexcharts/componentes/GraficoDeVelas.svelte';
 	import Spinner from '$lib/shadcn/componentes/ui/spinner/spinner.svelte';
+	import { deriveds } from '../../../lib/store/deriveds.svelte.ts';
+	import { estados } from '../../../lib/store/estados.svelte.ts';
 	import Formulario from './Formulario/index.svelte';
-	import { deriveds } from './store/deriveds.svelte.ts';
-	import { estados } from './store/estados.svelte.ts';
 </script>
 
 <Formulario />

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Label } from '$lib/shadcn/componentes/ui/label/index.js';
 	import * as Select from '$lib/shadcn/componentes/ui/select/index.js';
+	import { estados } from '$lib/store/estados.svelte';
 	import { constIntervalosDoYahooFinance } from '$lib/yahooFinance/constantes/constIntervalosDoYahooFinance';
-	import { estados } from '../store/estados.svelte';
 </script>
 
 <Label>INTERVALO:</Label>

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Label } from '$lib/shadcn/componentes/ui/label/index.js';
 	import * as Select from '$lib/shadcn/componentes/ui/select/index.js';
+	import { deriveds } from '$lib/store/deriveds.svelte';
+	import { estados } from '$lib/store/estados.svelte';
 	import { constMercados } from '$lib/yahooFinance/constantes/constMercados';
-	import { deriveds } from '../store/deriveds.svelte';
-	import { estados } from '../store/estados.svelte';
 
 	$effect(() => {
 		if (deriveds.ativos.length > 0) {

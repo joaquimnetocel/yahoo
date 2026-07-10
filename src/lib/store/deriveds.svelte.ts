@@ -1,14 +1,20 @@
 import { funcaoCalcularTrades } from '$lib/apexcharts/funcoes/funcaoCalcularTrades';
 import { funcaoExtrairLucroDeTrades } from '$lib/apexcharts/funcoes/funcaoExtrairLucroDeTrades';
+import { funcaoAtivosDeUmMercado } from '$lib/yahooFinance/funcoes/funcaoAtivosDeUmMercado.svelte';
+import { remotaPegarDadosDoYahooFinance } from '$lib/yahooFinance/funcoes/remotaPegarDadosDoYahooFinance/remotaPegarDadosDoYahooFinance.remote';
 import { estados } from './estados.svelte';
-import { funcaoAtivos } from './funcoesParaDeriveds/funcaoAtivos.svelte';
 import { funcaoMediasMoveis } from './funcoesParaDeriveds/funcaoMediasMoveis';
-import { funcaoPromessaDeDadosDoYahooFinance } from './funcoesParaDeriveds/funcaoPromessaDeDadosDoYahooFinance.svelte';
 import { funcaoVelas } from './funcoesParaDeriveds/funcaoVelas.svelte';
 
 class Deriveds {
-	ativos = $derived(funcaoAtivos({ estados }));
-	promessaDeDadosDoYahooFinance = $derived(funcaoPromessaDeDadosDoYahooFinance({ estados }));
+	ativos = $derived(funcaoAtivosDeUmMercado({ mercado: estados.mercado }));
+	promessaDeDadosDoYahooFinance = $derived(
+		remotaPegarDadosDoYahooFinance({
+			periodos: Number(estados.periodos),
+			simbolo: estados.simbolo,
+			intervalo: estados.intervalo,
+		}),
+	);
 	velas = $derived(
 		funcaoVelas({
 			promessa: this.promessaDeDadosDoYahooFinance,
