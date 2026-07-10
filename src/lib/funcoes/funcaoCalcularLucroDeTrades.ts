@@ -1,6 +1,6 @@
 import type { tipoTrade } from '$lib/tipos/tipoTrade';
 
-export function funcaoExtrairLucroDeTrades({ trades }: { trades: tipoTrade[] }) {
+export function funcaoCalcularLucroDeTrades({ trades }: { trades: tipoTrade[] }) {
 	const fatorDeLucro = trades.reduce((acumulado, corrente) => {
 		return acumulado * corrente.fatorDeLucro;
 	}, 1);

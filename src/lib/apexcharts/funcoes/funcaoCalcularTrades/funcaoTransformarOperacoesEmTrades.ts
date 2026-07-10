@@ -1,5 +1,5 @@
 import type { tipoOperacao } from '$lib/apexcharts/tipos/tipoOperacao';
-import type { tipoTrade } from '$lib/apexcharts/tipos/tipoTrade';
+import type { tipoTrade } from '$lib/tipos/tipoTrade';
 
 export const funcaoTransformarOperacoesEmTrades = function ({
 	operacoes,

@@ -3,7 +3,7 @@
 	import Spinner from '$lib/shadcn/componentes/ui/spinner/spinner.svelte';
 	import { deriveds } from '$lib/stores/storeParametrosGraficos/deriveds.svelte';
 	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
-	import Formulario from './Formulario/index.svelte';
+	import Formulario from '$lib/yahooFinance/componentes/Formulario/index.svelte';
 </script>
 
 <Formulario />
