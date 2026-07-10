@@ -6,7 +6,7 @@ import { funcaoConverterDeYahooFinanceParaApexchart } from '$lib/yahooFinance/fu
 import { remotaPegarDadosDoYahooFinance } from '$lib/yahooFinance/funcoes/remotaPegarDadosDoYahooFinance/remotaPegarDadosDoYahooFinance.remote';
 import { estados } from './estados.svelte';
 
-class Deriveds {
+class classeDeriveds {
 	ativos = $derived(funcaoAtivosDeUmMercado({ mercado: estados.mercado }));
 	promessaDeDadosDoYahooFinance = $derived(
 		remotaPegarDadosDoYahooFinance({
@@ -42,4 +42,4 @@ class Deriveds {
 	);
 }
 
-export const deriveds = new Deriveds();
+export const deriveds = new classeDeriveds();

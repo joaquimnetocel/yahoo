@@ -4,7 +4,10 @@
 	import { deriveds } from '$lib/stores/storeParametrosGraficos/deriveds.svelte';
 	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
 	import Formulario from '$lib/yahooFinance/componentes/Formulario/index.svelte';
+	import Iterativo from './Iterativo.svelte';
 </script>
+
+<Iterativo />
 
 <Formulario />
 
@@ -29,7 +32,7 @@
 							EXIBINDO GRÁFICO DE: {estados.simbolo}
 						</div>
 						<div class:text-green-500={deriveds.lucro > 0} class:text-red-500={deriveds.lucro < 0}>
-							LUCRO: {deriveds.lucro}
+							LUCRO: {deriveds.lucro.toFixed(4)}%
 						</div>
 					</div>
 				</h2>
