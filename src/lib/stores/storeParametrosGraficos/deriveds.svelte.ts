@@ -1,6 +1,8 @@
 import { funcaoCalcularTrades } from '$lib/apexcharts/funcoes/funcaoCalcularTrades';
 import { funcaoLinhasDeMediasMoveis } from '$lib/apexcharts/funcoes/funcaoLinhasDeMediasMoveis';
+import { funcaoCalcularDuracaoEmDiasDeTrades } from '$lib/funcoes/funcaoCalcularDuracaoEmDiasDeTrades';
 import { funcaoCalcularLucroDeTrades } from '$lib/funcoes/funcaoCalcularLucroDeTrades';
+import { funcaoTransformarParaLucroMensal } from '$lib/funcoes/funcaoTransformarParaLucroMensal';
 import { funcaoAtivosDeUmMercado } from '$lib/yahooFinance/funcoes/funcaoAtivosDeUmMercado.svelte';
 import { funcaoConverterDeYahooFinanceParaApexchart } from '$lib/yahooFinance/funcoes/funcaoConverterDeYahooFinanceParaApexchart';
 import { remotaPegarDadosDoYahooFinance } from '$lib/yahooFinance/funcoes/remotaPegarDadosDoYahooFinance/remotaPegarDadosDoYahooFinance.remote';
@@ -38,6 +40,17 @@ class classeDeriveds {
 	lucro = $derived(
 		funcaoCalcularLucroDeTrades({
 			trades: this.trades,
+		}),
+	);
+	dias = $derived(
+		funcaoCalcularDuracaoEmDiasDeTrades({
+			trades: this.trades,
+		}),
+	);
+	lucroMensal = $derived(
+		funcaoTransformarParaLucroMensal({
+			dias: this.dias,
+			lucro: this.lucro,
 		}),
 	);
 }

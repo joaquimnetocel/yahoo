@@ -25,7 +25,7 @@
 	{#each funcaoRange(curta + 1, maxPeriodo) as longa (longa)}
 		<Calculos
 			periodosParaMediasMoveis={[curta, longa]}
-			bind:lucro={matriz[curta][longa]}
+			bind:lucroObservado={matriz[curta][longa]}
 			onFinalizado={() => calculosConcluidos++}
 		/>
 	{/each}

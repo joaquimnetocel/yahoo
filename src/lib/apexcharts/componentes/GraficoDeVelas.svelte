@@ -2,6 +2,7 @@
 	import { cores } from '$lib/apexcharts/cores';
 	import type { tipoLinhaDoApexCharts } from '$lib/apexcharts/tipos/tipoLinhaDoApexcharts';
 	import type { tipoVelaDoApexcharts } from '$lib/apexcharts/tipos/tipoVelaDoApexcharts';
+	import { funcaoTempoEmDiasEntreDuasDatas } from '$lib/funcoes/funcaoTempoEmDiasEntreDuasDatas';
 	import type { tipoTrade } from '$lib/tipos/tipoTrade';
 	import type ApexCharts from 'apexcharts';
 
@@ -119,7 +120,11 @@
 							background: cor,
 							color: cor === cores.vermelho ? cores.branco : cores.preto,
 						},
-						text: `${trade.duracao} (${((trade.fatorDeLucro - 1) * 100).toFixed(2)}%)`,
+						text: `${trade.duracao} velas ${funcaoTempoEmDiasEntreDuasDatas({
+							dataFinal: trade.dataDaVenda,
+							dataInicial: trade.dataDaCompra,
+							precisao: 0,
+						})} dias (${((trade.fatorDeLucro - 1) * 100).toFixed(2)}%)`,
 					},
 				});
 			}

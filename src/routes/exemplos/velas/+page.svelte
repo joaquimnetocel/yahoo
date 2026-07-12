@@ -29,7 +29,7 @@
 				<h2 class="text-lg font-bold mb-2">
 					<div class="flex justify-between">
 						<div>
-							EXIBINDO GRÁFICO DE: {estados.simbolo}
+							EXIBINDO GRÁFICO DE: {estados.simbolo} ({deriveds.velas.length} VELAS)
 						</div>
 						<div class:text-green-500={deriveds.lucro > 0} class:text-red-500={deriveds.lucro < 0}>
 							LUCRO: {deriveds.lucro.toFixed(4)}%
@@ -46,3 +46,6 @@
 		</div>
 	{/if}
 </div>
+
+lucro mensal {deriveds.lucroMensal}
+dias {deriveds.dias}

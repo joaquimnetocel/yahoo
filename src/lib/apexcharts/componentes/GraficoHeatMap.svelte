@@ -1,12 +1,13 @@
 <script lang="ts">
 	import type ApexCharts from 'apexcharts';
-	import type { ApexAxisChartSeries, ApexOptions } from 'apexcharts';
+	import type { ApexOptions } from 'apexcharts';
+	import type { tipoHeatmapDoApexcharts } from '../tipos/tipoHeatmapDoApexcharts';
 
 	let {
 		series,
 		exibir = true,
 	}: {
-		series: ApexAxisChartSeries;
+		series: tipoHeatmapDoApexcharts[];
 		exibir?: boolean;
 	} = $props();
 
@@ -36,15 +37,44 @@
 		},
 
 		tooltip: {
-			y: {
-				formatter(value: number) {
-					return value.toFixed(2);
-				},
+			custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+				if (!w?.config?.series?.[seriesIndex]) return '';
+
+				const serieAtual = w.config.series[seriesIndex];
+
+				// 1. Remove a possibilidade de ser 'number'.
+				// O TS entende isso e passa a tratar 'serieAtual' estritamente como o objeto da série.
+				if (typeof serieAtual === 'number') return '';
+
+				// O 'name' ainda pode ser undefined pela tipagem, então usamos o operador ?? para garantir um fallback
+				const mediaCurta = serieAtual.name ?? `Série ${seriesIndex}`;
+
+				const ponto = serieAtual.data?.[dataPointIndex];
+				if (!ponto) return '';
+
+				// 2. Fazemos o mesmo cuidado com o ponto, já que ele também vem de uma união de tipos complexa
+				let mediaLonga = dataPointIndex;
+				if (typeof ponto === 'object' && ponto !== null && 'x' in ponto) {
+					mediaLonga = ponto.x;
+				}
+
+				const valor = series[seriesIndex][dataPointIndex];
+
+				return `
+            <div class="apexcharts-tooltip-title" style="padding: 6px 10px; font-weight: bold;">
+                Cruzamento de Médias
+            </div>
+            <div class="apexcharts-tooltip-series-group apexcharts-active" style="padding: 8px 10px; display: flex; flex-direction: column; gap: 4px;">
+                <div><strong>Média Curta (Y):</strong> ${mediaCurta}</div>
+                <div><strong>Média Longa (X):</strong> ${mediaLonga}</div>
+                <div><strong>Valor:</strong> ${valor.toFixed(2)}</div>
+            </div>
+        `;
 			},
 		},
 
 		legend: {
-			show: false,
+			show: true,
 		},
 	};
 

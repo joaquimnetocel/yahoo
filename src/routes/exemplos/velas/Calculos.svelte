@@ -1,16 +1,22 @@
 <script lang="ts">
 	import { funcaoCalcularTrades } from '$lib/apexcharts/funcoes/funcaoCalcularTrades';
 	import { funcaoLinhasDeMediasMoveis } from '$lib/apexcharts/funcoes/funcaoLinhasDeMediasMoveis';
+	import { funcaoCalcularDuracaoEmDiasDeTrades } from '$lib/funcoes/funcaoCalcularDuracaoEmDiasDeTrades';
 	import { funcaoCalcularLucroDeTrades } from '$lib/funcoes/funcaoCalcularLucroDeTrades';
+	import { funcaoTransformarParaLucroMensal } from '$lib/funcoes/funcaoTransformarParaLucroMensal';
 	import { deriveds } from '$lib/stores/storeParametrosGraficos/deriveds.svelte';
 	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
 
 	let {
 		periodosParaMediasMoveis,
 		// eslint-disable-next-line no-useless-assignment
-		lucro = $bindable(),
+		lucroObservado = $bindable(),
 		onFinalizado,
-	}: { periodosParaMediasMoveis: number[]; lucro: number; onFinalizado?: () => void } = $props();
+	}: {
+		periodosParaMediasMoveis: number[];
+		lucroObservado: number | undefined;
+		onFinalizado?: () => void;
+	} = $props();
 
 	let finalizado = $state(false);
 
@@ -29,14 +35,25 @@
 			linhas: linhas,
 		}),
 	);
-	const derivedLucro = $derived(
+	const lucro = $derived(
 		funcaoCalcularLucroDeTrades({
-			trades: trades,
+			trades,
+		}),
+	);
+	const dias = $derived(
+		funcaoCalcularDuracaoEmDiasDeTrades({
+			trades,
+		}),
+	);
+	const lucroMensal = $derived(
+		funcaoTransformarParaLucroMensal({
+			dias,
+			lucro,
 		}),
 	);
 
 	$effect(() => {
-		lucro = derivedLucro;
+		lucroObservado = lucroMensal;
 
 		if (!finalizado) {
 			finalizado = true;

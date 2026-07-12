@@ -1,7 +1,8 @@
+import type { tipoHeatmapDoApexcharts } from '$lib/apexcharts/tipos/tipoHeatmapDoApexcharts';
 import type { ApexAxisChartSeries } from 'apexcharts';
 
 export function funcaoMatrizParaHeatmapDoApexcharts({ matriz }: { matriz: number[][] }) {
-	const series: ApexAxisChartSeries = [];
+	const series: tipoHeatmapDoApexcharts[] = [];
 
 	for (let curta = 1; curta <= matriz.length - 1; curta++) {
 		const data = [];
