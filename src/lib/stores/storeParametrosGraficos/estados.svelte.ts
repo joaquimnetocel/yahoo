@@ -6,7 +6,7 @@ import type { tipoMercados } from '$lib/yahooFinance/tipos/tipoMercados';
 export class classeEstados {
 	mercado = $state<keyof tipoMercados>(constChavesMercados[0]);
 	simbolo = $state(constMercados[constChavesMercados[0]].ativos[0].ticker);
-	periodos = $state('300');
+	periodos = $state('900');
 	intervalo = $state<tipoIntervaloDoYahooFinance>('1d');
 	periodosParaMediasMoveis = $state<number[]>([10, 50]);
 	tipoDeMediaMovel = $state<'simples' | 'exponencial'>('simples');

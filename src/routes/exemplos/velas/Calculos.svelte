@@ -14,7 +14,7 @@
 		onFinalizado,
 	}: {
 		periodosParaMediasMoveis: number[];
-		lucroObservado: number | undefined;
+		lucroObservado: number | null;
 		onFinalizado?: () => void;
 	} = $props();
 

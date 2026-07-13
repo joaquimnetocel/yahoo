@@ -37,28 +37,26 @@
 		},
 
 		tooltip: {
-			custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+			custom: function ({ seriesIndex, dataPointIndex, w }) {
 				if (!w?.config?.series?.[seriesIndex]) return '';
 
 				const serieAtual = w.config.series[seriesIndex];
 
-				// 1. Remove a possibilidade de ser 'number'.
-				// O TS entende isso e passa a tratar 'serieAtual' estritamente como o objeto da série.
 				if (typeof serieAtual === 'number') return '';
 
-				// O 'name' ainda pode ser undefined pela tipagem, então usamos o operador ?? para garantir um fallback
 				const mediaCurta = serieAtual.name ?? `Série ${seriesIndex}`;
 
 				const ponto = serieAtual.data?.[dataPointIndex];
 				if (!ponto) return '';
 
-				// 2. Fazemos o mesmo cuidado com o ponto, já que ele também vem de uma união de tipos complexa
 				let mediaLonga = dataPointIndex;
-				if (typeof ponto === 'object' && ponto !== null && 'x' in ponto) {
-					mediaLonga = ponto.x;
-				}
+				let valorReal = 0; // Fallback seguro
 
-				const valor = series[seriesIndex][dataPointIndex];
+				if (typeof ponto === 'object' && ponto !== null) {
+					if ('x' in ponto) mediaLonga = ponto.x;
+					// CORREÇÃO: Pegamos o 'y' real guardado dentro do ponto de dados estruturado
+					if ('y' in ponto) valorReal = Number(ponto.y);
+				}
 
 				return `
             <div class="apexcharts-tooltip-title" style="padding: 6px 10px; font-weight: bold;">
@@ -67,7 +65,7 @@
             <div class="apexcharts-tooltip-series-group apexcharts-active" style="padding: 8px 10px; display: flex; flex-direction: column; gap: 4px;">
                 <div><strong>Média Curta (Y):</strong> ${mediaCurta}</div>
                 <div><strong>Média Longa (X):</strong> ${mediaLonga}</div>
-                <div><strong>Valor:</strong> ${valor.toFixed(2)}</div>
+                <div><strong>Valor:</strong> ${valorReal.toFixed(2)}</div>
             </div>
         `;
 			},
@@ -127,6 +125,12 @@
 					color: `hsl(120,70%,${70 - i * 4}%)`,
 				});
 			}
+
+			ranges.push({
+				from: 0,
+				to: 0,
+				color: `white`,
+			});
 
 			instancia = new apex.default(elemento, {
 				...opcoes,
