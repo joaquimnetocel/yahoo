@@ -1,5 +1,6 @@
 <script lang="ts">
 	import GraficoHeatMap from '$lib/apexcharts/componentes/GraficoHeatMap.svelte';
+	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
 	// import { funcaoMaiorLucro } from './aa';
 	import Calculos from './Calculos.svelte';
 	import { funcaoMatrizParaHeatmapDoApexcharts } from './funcaoMatrizParaHeatmapDoApexcharts';
@@ -51,8 +52,20 @@
 				})
 			: [],
 	);
+
+	// $effect(() => {
+	// 	void estados.simbolo;
+	// 	void estados.tipoDeMediaMovel;
+
+	// 	calculosConcluidos = 0;
+
+	// 	matriz = Array.from({ length: maxPeriodo + 1 }, () =>
+	// 		Array.from({ length: maxPeriodo + 1 }, () => null),
+	// 	);
+	// });
 </script>
 
+<!-- {#key JSON.stringify({ simbolo: estados.simbolo, tipoMedia: estados.tipoDeMediaMovel })} -->
 {#each rangeCurto as curta (curta)}
 	{#each rangeLongo as longa (longa)}
 		{#if longa > curta}
@@ -64,7 +77,7 @@
 		{/if}
 	{/each}
 {/each}
-
+<!-- {/key} -->
 <!-- TRINCA: {JSON.stringify(
 	funcaoMaiorLucro({
 		matriz,

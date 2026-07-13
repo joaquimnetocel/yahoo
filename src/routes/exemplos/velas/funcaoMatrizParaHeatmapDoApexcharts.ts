@@ -43,6 +43,5 @@ export function funcaoMatrizParaHeatmapDoApexcharts({
 		});
 	}
 
-	// Inverte o array para que C10 fique no topo do eixo Y e C100 na base (ou vice-versa)
 	return seriesDoApex;
 }
