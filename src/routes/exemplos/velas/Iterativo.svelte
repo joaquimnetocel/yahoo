@@ -1,6 +1,6 @@
 <script lang="ts">
 	import GraficoHeatMap from '$lib/apexcharts/componentes/GraficoHeatMap.svelte';
-	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
+	// import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
 	// import { funcaoMaiorLucro } from './aa';
 	import Calculos from './Calculos.svelte';
 	import { funcaoMatrizParaHeatmapDoApexcharts } from './funcaoMatrizParaHeatmapDoApexcharts';
