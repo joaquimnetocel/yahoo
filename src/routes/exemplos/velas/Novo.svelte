@@ -6,9 +6,12 @@
 	import { funcaoCalcularDuracaoEmDiasDeTrades } from '$lib/funcoes/funcaoCalcularDuracaoEmDiasDeTrades';
 	import { funcaoCalcularLucroDeTrades } from '$lib/funcoes/funcaoCalcularLucroDeTrades';
 	import { funcaoTransformarParaLucroMensal } from '$lib/funcoes/funcaoTransformarParaLucroMensal';
+	import Button from '$lib/shadcn/componentes/ui/button/button.svelte';
 	import { deriveds } from '$lib/stores/storeParametrosGraficos/deriveds.svelte';
 	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
+	import { untrack } from 'svelte';
 	import { SvelteMap } from 'svelte/reactivity';
+	import { funcaoMaioresLucros } from './funcaoMaioresLucros';
 	import { funcaoMatrizParaHeatmapDoApexcharts } from './funcaoMatrizParaHeatmapDoApexcharts';
 
 	const inicioPeriodo = 9; // Deve ser par para o step de pares funcionar perfeitamente
@@ -34,6 +37,7 @@
 		if (deriveds.velas.length === 0) {
 			return;
 		}
+
 		const cache = new SvelteMap<number, tipoLinhaDoApexCharts>();
 
 		for (const periodo of range) {
@@ -54,8 +58,8 @@
 		for (const periodoCurto of range) {
 			for (const periodoLongo of range) {
 				if (periodoCurto < periodoLongo) {
-					const linhaCurta = cache.get(periodoCurto) as tipoLinhaDoApexCharts;
-					const linhaLonga = cache.get(periodoLongo) as tipoLinhaDoApexCharts;
+					const linhaCurta = cache.get(periodoCurto)!;
+					const linhaLonga = cache.get(periodoLongo)!;
 					const trades = funcaoCalcularTrades({
 						velas: deriveds.velas,
 						linhas: [linhaCurta, linhaLonga],
@@ -74,8 +78,23 @@
 				}
 			}
 		}
+
 		matriz = novaMatriz;
 	});
+
+	const melhores = $derived(funcaoMaioresLucros({ matriz, quantidade: 10 }));
+
+	// $effect(() => {
+	// 	const { melhorCurta, melhorLonga } = melhores[0];
+
+	// 	const [curtaAtual, longaAtual] = untrack(() => estados.periodosParaMediasMoveis);
+
+	// 	if (curtaAtual === melhorCurta && longaAtual === melhorLonga) {
+	// 		return;
+	// 	}
+
+	// 	estados.periodosParaMediasMoveis = [melhorCurta, melhorLonga];
+	// });
 
 	const series = $derived(
 		funcaoMatrizParaHeatmapDoApexcharts({
@@ -87,6 +106,23 @@
 	);
 </script>
 
-{#key estados.simbolo}
-	<GraficoHeatMap exibir={true} {series} />
-{/key}
+{#each Array(10) as _, i (i)}
+	<Button
+		onclick={() => {
+			const { melhorCurta, melhorLonga } = melhores[i];
+
+			const [curtaAtual, longaAtual] = untrack(() => estados.periodosParaMediasMoveis);
+
+			if (curtaAtual === melhorCurta && longaAtual === melhorLonga) {
+				return;
+			}
+
+			estados.periodosParaMediasMoveis = [melhorCurta, melhorLonga];
+		}}
+	>
+		maior {i}
+	</Button>
+{/each}
+<!-- {#key estados.simbolo} -->
+<GraficoHeatMap exibir={true} {series} />
+<!-- {/key} -->
