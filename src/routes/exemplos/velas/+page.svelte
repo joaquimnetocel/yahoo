@@ -4,10 +4,8 @@
 	import { deriveds } from '$lib/stores/storeParametrosGraficos/deriveds.svelte';
 	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
 	import Formulario from '$lib/yahooFinance/componentes/Formulario/index.svelte';
-	import Iterativo from './Iterativo.svelte';
+	import Novo from './Novo.svelte';
 </script>
-
-<Iterativo />
 
 <Formulario />
 
@@ -49,3 +47,5 @@
 
 lucro mensal {deriveds.lucroMensal}
 dias {deriveds.dias}
+
+<Novo />

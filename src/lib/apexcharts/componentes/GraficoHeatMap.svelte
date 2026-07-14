@@ -89,14 +89,17 @@
 
 			if (cancelado || !elemento) return;
 
-			const valores = series.flatMap((serie) =>
-				(serie.data as { x: string; y: number }[]).map((p) => p.y),
-			);
+			// const valores = series.flatMap((serie) =>
+			// 	(serie.data as { x: string; y: number }[]).map((p) => p.y),
+			// );
+
+			const valores = series
+				.flatMap((serie) => serie.data)
+				.map((p) => p.y)
+				.filter((valor): valor is number => valor !== null);
 
 			const minimo = Math.min(...valores);
 			const maximo = Math.max(...valores);
-
-			const amplitude = Math.max(Math.abs(minimo), Math.abs(maximo));
 
 			type Range = {
 				from: number;
@@ -108,24 +111,25 @@
 
 			const faixas = 10;
 
-			// Vermelhos
-			for (let i = 0; i < faixas; i++) {
-				ranges.push({
-					from: -amplitude + (amplitude * i) / faixas,
-					to: -amplitude + (amplitude * (i + 1)) / faixas,
-					color: `hsl(0,80%,${25 + i * 4}%)`,
-				});
+			if (minimo < 0) {
+				for (let i = 0; i < faixas; i++) {
+					ranges.push({
+						from: minimo + (Math.abs(minimo) * i) / faixas,
+						to: minimo + (Math.abs(minimo) * (i + 1)) / faixas,
+						color: `hsl(0,80%,${25 + i * 4}%)`,
+					});
+				}
 			}
 
-			// Verdes
-			for (let i = 0; i < faixas; i++) {
-				ranges.push({
-					from: (amplitude * i) / faixas,
-					to: (amplitude * (i + 1)) / faixas,
-					color: `hsl(120,70%,${70 - i * 4}%)`,
-				});
+			if (maximo > 0) {
+				for (let i = 0; i < faixas; i++) {
+					ranges.push({
+						from: (maximo * i) / faixas,
+						to: (maximo * (i + 1)) / faixas,
+						color: `hsl(120,70%,${70 - i * 4}%)`,
+					});
+				}
 			}
-
 			ranges.push({
 				from: 0,
 				to: 0,
@@ -135,7 +139,7 @@
 			instancia = new apex.default(elemento, {
 				...opcoes,
 
-				series,
+				series: structuredClone(series),
 
 				plotOptions: {
 					heatmap: {
