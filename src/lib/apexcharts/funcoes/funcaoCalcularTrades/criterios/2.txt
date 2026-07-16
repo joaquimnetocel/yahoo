@@ -1,0 +1,16 @@
+2. Melhor sistema para reversão
+
+Quando o mercado está lateral:
+
+Bollinger Bands
+RSI
+
+Compra
+
+preço toca banda inferior
+RSI < 30
+
+Venda
+
+preço toca banda superior
+RSI > 70

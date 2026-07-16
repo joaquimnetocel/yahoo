@@ -1,0 +1,32 @@
+1. Melhor sistema apenas seguindo tendência
+
+Um dos sistemas mais robustos historicamente é:
+
+EMA curta
+EMA longa
+ADX
+ATR
+
+Regras:
+
+Compra
+
+EMA20 cruza acima da EMA50
+ADX > 25
+Stop = 2 ATR
+
+Venda
+
+cruzamento contrário
+stop
+
+Esse sistema é extremamente simples e continua funcionando em praticamente todos os mercados.
+
+----
+
+Como você já possui um motor de backtests e está experimentando combinações de médias móveis, uma boa estratégia é tratar os três componentes de forma diferente:
+
+PDI e MDI podem ser usados como gatilhos (por exemplo, entrar quando o PDI cruza acima do MDI e sair no cruzamento oposto).
+ADX pode ser usado como filtro, exigindo que a tendência tenha uma força mínima (por exemplo, ADX > 20, 25 ou 30).
+
+Assim, você pode testar sistematicamente diferentes períodos do ADX e diferentes limiares de força para descobrir quais combinações realmente agregam desempenho ao seu sistema.

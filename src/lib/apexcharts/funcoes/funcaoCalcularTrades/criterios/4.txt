@@ -1,0 +1,12 @@
+4. Melhor sistema usando volume
+
+Eu gosto bastante de:
+
+EMA + OBV
+
+Compra
+
+EMA20 > EMA50
+OBV faz nova máxima
+
+É surpreendentemente eficiente.
