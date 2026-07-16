@@ -1,4 +1,5 @@
 import { funcaoCalcularTrades } from '$lib/apexcharts/funcoes/funcaoCalcularTrades';
+import { funcaoLinhasDeAdx } from '$lib/apexcharts/funcoes/funcaoLinhasDeAdx';
 import { funcaoLinhasDeMediasMoveis } from '$lib/apexcharts/funcoes/funcaoLinhasDeMediasMoveis';
 import { funcaoLinhasDeRsis } from '$lib/apexcharts/funcoes/funcaoLinhasDeRsi';
 import { funcaoCalcularDuracaoEmDiasDeTrades } from '$lib/funcoes/funcaoCalcularDuracaoEmDiasDeTrades';
@@ -24,20 +25,29 @@ class classeDeriveds {
 		}
 		return [];
 	});
-	mediasMoveis = $derived(
+	linhasDeMediasMoveis = $derived(
 		funcaoLinhasDeMediasMoveis({
 			periodos: estados.periodosParaMediasMoveis,
 			tipo: estados.tipoDeMediaMovel,
 			velas: this.velas,
 		}),
 	);
-	rsis = $derived(
+	linhasDeRsis = $derived(
 		funcaoLinhasDeRsis({
 			periodos: estados.periodosParaRsis,
 			velas: this.velas,
 		}),
 	);
-	linhas = $derived([...this.mediasMoveis]);
+	adxs = $derived(
+		funcaoLinhasDeAdx({
+			periodos: estados.periodosParaAdx,
+			velas: this.velas,
+		}),
+	);
+	linhasDoAdx = $derived(this.adxs.map((aux) => aux.linhaDoAdx));
+	linhasDoPdi = $derived(this.adxs.map((aux) => aux.linhaDoPdi));
+	linhasDoMdi = $derived(this.adxs.map((aux) => aux.linhaDoMdi));
+	linhas = $derived([...this.linhasDeMediasMoveis]);
 	trades = $derived(
 		funcaoCalcularTrades({
 			velas: this.velas,

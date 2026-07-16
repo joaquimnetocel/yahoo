@@ -5,6 +5,7 @@
 	import { Label } from '$lib/shadcn/componentes/ui/label/index.js';
 	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
 	import Drawer from './Drawer.svelte';
+	import InputsDeAdx from './InputsDeAdx.svelte';
 	import InputsDeMediasMoveis from './InputsDeMediasMoveis.svelte';
 	import InputsDeRsis from './InputsDeRsis.svelte';
 	import RadioDeTipoDeMediaMovel from './RadioDeTipoDeMediaMovel.svelte';
@@ -50,6 +51,16 @@
 			<div class="flex flex-col items-center gap-2">
 				<div class="flex justify-center">
 					<InputsDeRsis />
+				</div>
+			</div>
+		</Drawer>
+	</div>
+	<div class="flex flex-col gap-1.5">
+		<Label>ADXs</Label>
+		<Drawer titulo="ADXs" descricao="Determine os ADXs a serem exibidas no gráfico.">
+			<div class="flex flex-col items-center gap-2">
+				<div class="flex justify-center">
+					<InputsDeAdx />
 				</div>
 			</div>
 		</Drawer>

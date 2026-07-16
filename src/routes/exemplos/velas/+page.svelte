@@ -51,9 +51,11 @@
 				{/if}
 			</div>
 		{/if}
+		<h2>RSI</h2>
+		<GraficoDeLinhas exibir={true} linhas={deriveds.linhasDeRsis} />
+		<h2>ADX</h2>
+		<GraficoDeLinhas exibir={true} linhas={deriveds.linhasDoAdx} />
 	</div>
 </div>
-
-<GraficoDeLinhas exibir={true} linhas={deriveds.rsis} />
 
 <!-- <Novo /> -->

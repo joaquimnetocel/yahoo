@@ -16,7 +16,7 @@
 		series: [],
 		chart: {
 			type: 'line',
-			height: 350,
+			height: 200,
 			id: 'linhas',
 		},
 		stroke: {
