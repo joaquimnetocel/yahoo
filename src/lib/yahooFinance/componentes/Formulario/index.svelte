@@ -6,6 +6,7 @@
 	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
 	import Drawer from './Drawer.svelte';
 	import InputsDeMediasMoveis from './InputsDeMediasMoveis.svelte';
+	import InputsDeRsis from './InputsDeRsis.svelte';
 	import RadioDeTipoDeMediaMovel from './RadioDeTipoDeMediaMovel.svelte';
 	import SelectDeAtivo from './SelectDeAtivo.svelte';
 	import SelectDeIntervalo from './SelectDeIntervalo.svelte';
@@ -39,6 +40,16 @@
 					<InputsDeMediasMoveis
 						titulo={`MÉDIAS MÓVEIS ${estados.tipoDeMediaMovel === 'simples' ? 'SIMPLES' : 'EXPONENCIAIS'} (${estados.tipoDeMediaMovel === 'simples' ? 'SMA' : 'EMA'})`}
 					/>
+				</div>
+			</div>
+		</Drawer>
+	</div>
+	<div class="flex flex-col gap-1.5">
+		<Label>RSIs</Label>
+		<Drawer titulo="RSIs" descricao="Determine os RSIs a serem exibidas no gráfico.">
+			<div class="flex flex-col items-center gap-2">
+				<div class="flex justify-center">
+					<InputsDeRsis />
 				</div>
 			</div>
 		</Drawer>

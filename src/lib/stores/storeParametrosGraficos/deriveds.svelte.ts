@@ -1,5 +1,6 @@
 import { funcaoCalcularTrades } from '$lib/apexcharts/funcoes/funcaoCalcularTrades';
 import { funcaoLinhasDeMediasMoveis } from '$lib/apexcharts/funcoes/funcaoLinhasDeMediasMoveis';
+import { funcaoLinhasDeRsis } from '$lib/apexcharts/funcoes/funcaoLinhasDeRsi';
 import { funcaoCalcularDuracaoEmDiasDeTrades } from '$lib/funcoes/funcaoCalcularDuracaoEmDiasDeTrades';
 import { funcaoCalcularLucroDeTrades } from '$lib/funcoes/funcaoCalcularLucroDeTrades';
 import { funcaoTransformarParaLucroMensal } from '$lib/funcoes/funcaoTransformarParaLucroMensal';
@@ -27,6 +28,12 @@ class classeDeriveds {
 		funcaoLinhasDeMediasMoveis({
 			periodos: estados.periodosParaMediasMoveis,
 			tipo: estados.tipoDeMediaMovel,
+			velas: this.velas,
+		}),
+	);
+	rsis = $derived(
+		funcaoLinhasDeRsis({
+			periodos: estados.periodosParaRsis,
 			velas: this.velas,
 		}),
 	);

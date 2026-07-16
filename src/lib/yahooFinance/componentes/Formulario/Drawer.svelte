@@ -15,7 +15,7 @@
 				class: 'cursor-pointer',
 			})}
 		>
-			MÉDIAS MÓVEIS...
+			{titulo}...
 		</div>
 	</Drawer.Trigger>
 

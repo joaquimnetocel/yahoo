@@ -9,7 +9,6 @@
 	import Button from '$lib/shadcn/componentes/ui/button/button.svelte';
 	import { deriveds } from '$lib/stores/storeParametrosGraficos/deriveds.svelte';
 	import { estados } from '$lib/stores/storeParametrosGraficos/estados.svelte';
-	import { untrack } from 'svelte';
 	import { SvelteMap } from 'svelte/reactivity';
 	import { funcaoMaioresLucros } from './funcaoMaioresLucros';
 	import { funcaoMatrizParaHeatmapDoApexcharts } from './funcaoMatrizParaHeatmapDoApexcharts';
@@ -84,18 +83,6 @@
 
 	const melhores = $derived(funcaoMaioresLucros({ matriz, quantidade: 10 }));
 
-	// $effect(() => {
-	// 	const { melhorCurta, melhorLonga } = melhores[0];
-
-	// 	const [curtaAtual, longaAtual] = untrack(() => estados.periodosParaMediasMoveis);
-
-	// 	if (curtaAtual === melhorCurta && longaAtual === melhorLonga) {
-	// 		return;
-	// 	}
-
-	// 	estados.periodosParaMediasMoveis = [melhorCurta, melhorLonga];
-	// });
-
 	const series = $derived(
 		funcaoMatrizParaHeatmapDoApexcharts({
 			matriz: matriz as number[][],
@@ -106,23 +93,31 @@
 	);
 </script>
 
-{#each Array(10) as _, i (i)}
-	<Button
-		onclick={() => {
-			const { melhorCurta, melhorLonga } = melhores[i];
+<div class="mx-6 border-4 border-slate-500">
+	<h2 class="text-center text-lg font-bold">MAIORES RETORNOS:</h2>
+	<div class="flex justify-center flex-wrap">
+		<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
+		{#each Array(10) as _, i (i)}
+			<Button
+				onclick={() => {
+					const [curtaAtual, longaAtual] = estados.periodosParaMediasMoveis;
 
-			const [curtaAtual, longaAtual] = untrack(() => estados.periodosParaMediasMoveis);
+					if (curtaAtual === melhores[i].melhorCurta && longaAtual === melhores[i].melhorLonga) {
+						return;
+					}
 
-			if (curtaAtual === melhorCurta && longaAtual === melhorLonga) {
-				return;
-			}
+					estados.periodosParaMediasMoveis = [melhores[i].melhorCurta, melhores[i].melhorLonga];
+				}}
+			>
+				{i + 1}ª maior ({melhores[i]?.melhorCurta}, {melhores[i]?.melhorLonga}, {melhores[
+					i
+				]?.lucro.toFixed(1)}%)
+			</Button>
+		{/each}
+	</div>
+</div>
 
-			estados.periodosParaMediasMoveis = [melhorCurta, melhorLonga];
-		}}
-	>
-		maior {i}
-	</Button>
-{/each}
-<!-- {#key estados.simbolo} -->
-<GraficoHeatMap exibir={true} {series} />
-<!-- {/key} -->
+<div class="mx-6 border-4 border-slate-500">
+	<h2 class="text-center text-lg font-bold">HEATMAP DE RETORNOS:</h2>
+	<GraficoHeatMap exibir={true} {series} />
+</div>

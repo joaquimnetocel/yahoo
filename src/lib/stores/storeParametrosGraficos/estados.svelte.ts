@@ -9,6 +9,7 @@ export class classeEstados {
 	periodos = $state('900');
 	intervalo = $state<tipoIntervaloDoYahooFinance>('1d');
 	periodosParaMediasMoveis = $state<number[]>([10, 50]);
+	periodosParaRsis = $state<number[]>([10, 50]);
 	tipoDeMediaMovel = $state<'simples' | 'exponencial'>('simples');
 }
 
